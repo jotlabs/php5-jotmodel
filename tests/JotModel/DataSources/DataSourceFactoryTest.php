@@ -20,4 +20,13 @@ class DataSourceFactoryTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($this->factory);
         $this->assertTrue(is_a($this->factory, 'JotModel\DataSources\DataSourceFactory'));
     }
+
+
+    public function testGetDataSourceReturnsPdoDataSource()
+    {
+        $dataSource = $this->factory->getDataSource('');
+        $this->assertNotNull($dataSource);
+        $this->assertTrue(is_a($dataSource, 'JotModel\DataSources\DataSource'));
+        $this->assertTrue(is_a($dataSource, 'JotModel\DataSources\Implementations\PdoDataSource'));
+    }
 }

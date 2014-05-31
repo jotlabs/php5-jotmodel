@@ -1,6 +1,7 @@
 <?php
 namespace JotModel\DataSources;
 
+use PDO;
 use JotModel\DataSources\Implementations\PdoDataSource;
 
 class DataSourceFactory
@@ -21,7 +22,8 @@ class DataSourceFactory
     public function getDataSource($dsName)
     {
         $dataSource = null;
-        $dataSource = new PDO('sqlite::memory:');
+        $pdoConnection = new PDO('sqlite::memory:');
+        $dataSource    = new PdoDataSource($pdoConnection);
         return $dataSource;
     }
 }
