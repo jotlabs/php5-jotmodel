@@ -1,8 +1,8 @@
 <?php
-namespace JotModel\DataSources\Implementations;
+namespace JotModel\DataSources;
 
 use PDO;
-use JotModel\DataSources\DataSource;
+use JotModel\DataSource;
 use JotModel\Exceptions\JotModelException;
 
 class PdoDataSource implements DataSource

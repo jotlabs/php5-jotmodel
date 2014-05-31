@@ -1,5 +1,5 @@
 <?php
-namespace JotModel\DataSources;
+namespace JotModel;
 
 interface DataSource
 {

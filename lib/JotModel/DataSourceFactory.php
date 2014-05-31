@@ -1,8 +1,8 @@
 <?php
-namespace JotModel\DataSources;
+namespace JotModel;
 
 use PDO;
-use JotModel\DataSources\Implementations\PdoDataSource;
+use JotModel\DataSources\PdoDataSource;
 
 class DataSourceFactory
 {

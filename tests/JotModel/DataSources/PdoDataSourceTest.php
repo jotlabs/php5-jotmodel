@@ -1,5 +1,5 @@
 <?php
-namespace JotModel\DataSources\Implementations;
+namespace JotModel\DataSources;
 
 use PHPUnit_Framework_TestCase;
 use PDO;
@@ -17,9 +17,9 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
 
     public function testPdoDataSourceExists()
     {
-        $this->assertTrue(class_exists('JotModel\DataSources\Implementations\PdoDataSource'));
+        $this->assertTrue(class_exists('JotModel\DataSources\PdoDataSource'));
         $this->assertNotNull($this->dataSource);
-        $this->assertTrue(is_a($this->dataSource, 'JotModel\DataSources\Implementations\PdoDataSource'));
+        $this->assertTrue(is_a($this->dataSource, 'JotModel\DataSources\PdoDataSource'));
     }
 
     /**

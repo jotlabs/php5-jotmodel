@@ -1,5 +1,5 @@
 <?php
-namespace JotModel\DataSources;
+namespace JotModel;
 
 use PHPUnit_Framework_TestCase;
 
@@ -16,9 +16,9 @@ class DataSourceFactoryTest extends PHPUnit_Framework_TestCase
 
     public function testFactoryExists()
     {
-        $this->assertTrue(class_exists('JotModel\DataSources\DataSourceFactory'));
+        $this->assertTrue(class_exists('JotModel\DataSourceFactory'));
         $this->assertNotNull($this->factory);
-        $this->assertTrue(is_a($this->factory, 'JotModel\DataSources\DataSourceFactory'));
+        $this->assertTrue(is_a($this->factory, 'JotModel\DataSourceFactory'));
     }
 
 
@@ -26,7 +26,7 @@ class DataSourceFactoryTest extends PHPUnit_Framework_TestCase
     {
         $dataSource = $this->factory->getDataSource('');
         $this->assertNotNull($dataSource);
-        $this->assertTrue(is_a($dataSource, 'JotModel\DataSources\DataSource'));
-        $this->assertTrue(is_a($dataSource, 'JotModel\DataSources\Implementations\PdoDataSource'));
+        $this->assertTrue(is_a($dataSource, 'JotModel\DataSource'));
+        $this->assertTrue(is_a($dataSource, 'JotModel\DataSources\PdoDataSource'));
     }
 }
