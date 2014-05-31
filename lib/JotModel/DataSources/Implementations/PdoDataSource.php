@@ -3,6 +3,7 @@ namespace JotModel\DataSources\Implementations;
 
 use PDO;
 use JotModel\DataSources\DataSource;
+use JotModel\Exceptions\JotModelException;
 
 class PdoDataSource implements DataSource
 {
