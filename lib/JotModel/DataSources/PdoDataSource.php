@@ -11,6 +11,12 @@ class PdoDataSource implements DataSource
 
     public function __construct($db)
     {
+        $this->setDbConnection($db);
+    }
+
+
+    public function setDbConnection($db)
+    {
         if (is_a($db, 'PDO')) {
             $this->db = $db;
         } else {
