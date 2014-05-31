@@ -29,5 +29,6 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
     {
         $db = (object) null;
         $dataSource = new PdoDataSource($db);
+        $this->assertFalse(true);
     }
 }
