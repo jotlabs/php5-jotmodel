@@ -2,3 +2,6 @@
 # Ignore editing backups
 .DS_Store
 
+# Ignore volatile directories
+vendor/*
+
