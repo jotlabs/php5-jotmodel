@@ -58,8 +58,8 @@ CREATE TABLE IF NOT EXISTS `content` (
     permalink       VARCHAR(255),
     imageTemplate   VARCHAR(255),
 
-    date_added      DATETIME,
-    date_updated    TIMESTAMP,
+    dateAdded       DATETIME,
+    dateUpdated    TIMESTAMP,
 
     FOREIGN KEY (`_model_id`)  REFERENCES `content_models`(`_id`),
     FOREIGN KEY (`_status_id`) REFERENCES `content_status`(`_id`)
