@@ -8,6 +8,8 @@ class DataSourceFactory
 {
     private static $INSTANCE;
 
+    protected $schema;
+
 
     public function getInstance()
     {
@@ -24,6 +26,7 @@ class DataSourceFactory
         $dataSource = null;
         $pdoConnection = new PDO('sqlite::memory:');
         $dataSource    = new PdoDataSource($pdoConnection);
+        $dataSource->setSchema($this->schema);
         return $dataSource;
     }
 }
