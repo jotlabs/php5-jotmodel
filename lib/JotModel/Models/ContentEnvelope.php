@@ -33,6 +33,7 @@ class ContentEnvelope
 
 
     protected $envelopeId;
+    protected $contentId;
 
     protected $status;
     protected $model;
