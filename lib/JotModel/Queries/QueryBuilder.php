@@ -5,24 +5,24 @@ use JotModel\Queries\Query;
 
 class QueryBuilder
 {
-    protected $model;
     protected $modelClass;
+    protected $queryName;
     protected $filters = array();
 
 
     public function build()
     {
         $query = new Query();
-        $query->setModel($this->model);
         $query->setModelClass($this->modelClass);
+        $query->setQueryName($this->queryName);
         $query->setFilters($this->filters);
         return $query;
     }
 
 
-    public function setModel($model)
+    public function setQueryName($queryName)
     {
-        $this->model = $model;
+        $this->queryName = $queryName;
         return $this;
     }
 
