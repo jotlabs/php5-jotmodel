@@ -30,7 +30,7 @@ class ContentRepositoryTest extends PHPUnit_Framework_TestCase
     {
         $slug = 'the-ashtanga-primary-series';
         $content = $this->repo->getBySlug($slug);
-        print_r($content);
+        //print_r($content);
         $this->assertNotNull($content);
         $this->assertNotNull($content->slug);
         $this->assertEquals($slug, $content->slug);
