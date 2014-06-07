@@ -3,9 +3,10 @@ namespace JotModel\Queries;
 
 class Query
 {
-    protected $model;
+    protected $queryName;
     protected $modelClass;
     protected $filters;
+
 
     public function __construct()
     {
@@ -13,15 +14,15 @@ class Query
     }
 
 
-    public function getModel()
+    public function getQueryName()
     {
-        return $this->model;
+        return $this->queryName;
     }
 
 
-    public function setModel($model)
+    public function setQueryName($queryName)
     {
-        $this->model = $model;
+        $this->queryName = $queryName;
     }
 
 
