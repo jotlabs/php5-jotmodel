@@ -18,8 +18,8 @@ class ContentRepository
     {
         $builder = new QueryBuilder();
         $builder
-            ->setModel('content')
             ->setModelClass('JotModel\Models\ContentEnvelope')
+            ->setQueryName('getBySlug')
             ->filter('slug', $slug);
 
         $query   = $builder->build();
