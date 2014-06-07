@@ -30,6 +30,12 @@ class PdoDataSource implements DataSource
     }
 
 
+    public function setSchema($schema)
+    {
+        $this->schema = $schema;
+    }
+
+
     public function findOne($query)
     {
         $first   = null;
