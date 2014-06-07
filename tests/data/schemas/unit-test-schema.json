@@ -1,0 +1,52 @@
+{
+    "models": {
+        "JotModel\\Models\\ContentEnvelope": {
+            "entity": "contentEnvelope",
+            "fields": {
+                "envelopeId": {},
+                "status": {},
+                "model": {},
+                "slug": {},
+                "title": {},
+                "excerpt": {},
+                "permalink": {},
+                "imageTemplate": {},
+                "dateAdded": {},
+                "dateUpdated": {}
+            }
+        },
+    },
+
+    "entities": {
+        "contentEnvelope": {
+            "table": "content",
+            "subtables": [
+                "content_status",
+                "content_models",
+                "content_types"
+            ]
+        }
+    },
+
+    "tables": {
+        "content": {},
+        "content_status": {},
+        "content_modela": {},
+        "content_types": {}
+    },
+
+    "relations": [
+        {
+            "from": { "table": "content",           "field": "_status_id"   },
+            "to":   { "table": "content_status",    "field": "_id"          }
+        },
+        {
+            "from": { "table": "content",           "field": "_model_id"    },
+            "to":   { "table": "content_models",    "field": "_id"          }
+        },
+        {
+            "from": { "table": "content_models",    "field": "_type_id"     },
+            "to":   { "table": "content_types",     "field": "_id"          }
+        }
+    ]
+}
