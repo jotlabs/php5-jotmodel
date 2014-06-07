@@ -75,18 +75,12 @@ class PdoDataSource implements DataSource
     {
         $statement = null;
 
-        //echo "Query: ";
-        //print_r($query);
-
-        // Create SQL: which query, which filters, which joins
-        $builder  = new SqlQueryBuilder();
-        $builder->setQuery($query);
-        $sqlQuery = $builder->build();
-
-        //echo "SQL Query:";
-        //print_r($sqlQuery);
+        $sqlBuilder = new SqlQueryBuilder();
+        $sqlBuilder->setQuery($query);
+        $sqlQuery   = $sqlBuilder->build();
 
         $sql = $sqlQuery->toString();
+        //echo "SQL: {$sql}\n";
         $statement = $this->db->prepare($sql);
 
         // Set fetch-mode
