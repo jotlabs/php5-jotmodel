@@ -37,5 +37,7 @@ class ContentRepositoryTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue(is_a($content, 'JotModel\Models\ContentEnvelope'));
         $this->assertEquals($slug, $content->slug);
+        $this->assertEquals('video', $content->model);
+        $this->assertEquals('A', $content->status);
     }
 }
