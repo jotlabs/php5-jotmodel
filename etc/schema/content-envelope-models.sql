@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `content_status` (
 
 
 --
--- Content Types -- maps the content envelope to the table schema
+-- Content Types -- maps the content envelope model to the table schema
 --
 CREATE TABLE IF NOT EXISTS `content_types` (
     _id             INTEGER PRIMARY KEY AUTO_INCREMENT,
