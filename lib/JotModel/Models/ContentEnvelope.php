@@ -35,8 +35,8 @@ class ContentEnvelope
     protected $envelopeId;
     protected $contentId;
 
-    protected $status;
-    protected $model;
+    public $status;
+    public $model;
 
     public $slug;
     public $title;
