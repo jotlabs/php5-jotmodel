@@ -64,7 +64,11 @@ class SqlQueryBuilder
 
         $sqlFields = array();
         foreach ($modelFields as $property => $sqlField) {
-            $sqlFields[] = "{$sqlField} AS {$property}";
+            if (!$sqlField || $property === $sqlField) {
+                $sqlFields[] = $property;
+            } else {
+                $sqlFields[] = "{$sqlField} AS {$property}";
+            }
         }
 
         return $sqlFields;
