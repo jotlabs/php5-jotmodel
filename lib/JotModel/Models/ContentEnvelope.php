@@ -3,6 +3,7 @@ namespace JotModel\Models;
 
 class ContentEnvelope
 {
+    # TODO: Abstract these static properties into a schema class or config object
     public static $MODEL = 'content';
 
     public static $SQL_QUERIES = array(
