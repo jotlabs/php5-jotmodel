@@ -64,7 +64,9 @@ class SqlQueryBuilder
 
         $sqlFields = array();
         foreach ($modelFields as $property => $sqlField) {
-            if (!$sqlField || $property === $sqlField) {
+            if (strpos($sqlField, '@') === 0) {
+                // hydrated field, do nothing.
+            } elseif (!$sqlField || $property === $sqlField) {
                 $sqlFields[] = $property;
             } else {
                 $sqlFields[] = "{$sqlField} AS {$property}";
