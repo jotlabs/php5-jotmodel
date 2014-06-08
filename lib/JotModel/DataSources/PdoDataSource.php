@@ -36,7 +36,7 @@ class PdoDataSource implements DataSource
     }
 
 
-    public function findOne($query)
+    public function findOne($query, $hydrate = true)
     {
         $first   = null;
         $results = $this->find($query);
