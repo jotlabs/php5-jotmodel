@@ -1,8 +1,6 @@
 --
 -- Model: Content
 -- Dependencies: none
--- Decorates: none
--- Extends: none
 --
 -- Core Content Envelope schema
 --
