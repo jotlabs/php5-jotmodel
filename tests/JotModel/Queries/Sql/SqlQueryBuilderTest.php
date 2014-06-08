@@ -23,7 +23,7 @@ class SqlQueryBuilderTest extends PHPUnit_Framework_TestCase
     }
 
 
-    public function testContentEnvelopeQueryStructureReturnsMultiJoinSqlQuery()
+    public function testContentEnvelopeQueryStructureReturnsSqlQuery()
     {
         $slug = 'the-ashtanga-primary-series';
         $queryBuilder = new QueryBuilder();
@@ -42,10 +42,8 @@ class SqlQueryBuilderTest extends PHPUnit_Framework_TestCase
         //echo "SQL: {$sql}\n";
 
         $this->assertNotNull($sql);
-        $this->assertTrue(strpos($sql, 'SELECT content._id') === 0);
-        $this->assertTrue(preg_match('/LEFT JOIN `content_status` ON content\./', $sql) === 1);
-        $this->assertTrue(preg_match('/LEFT JOIN `content_models` ON content\./', $sql) === 1);
-        $this->assertTrue(preg_match('/LEFT JOIN `content_types`  ON content_models\./', $sql) == 1);
-        $this->assertTrue(preg_match('/WHERE content\.slug=:slug/', $sql) == 1);
+        $this->assertTrue(strpos($sql, 'SELECT ') === 0);
+        $this->assertTrue(preg_match('/FROM `content_envelope`/', $sql) == 1);
+        $this->assertTrue(preg_match('/WHERE slug=:slug/', $sql) == 1);
     }
 }
