@@ -39,7 +39,7 @@ class PdoDataSource implements DataSource
     public function findOne($query, $hydrate = true)
     {
         $first   = null;
-        $results = $this->find($query);
+        $results = $this->find($query, $hydrate);
 
         if (count($results)) {
             $first = $results[0];
@@ -48,11 +48,19 @@ class PdoDataSource implements DataSource
         return $first;
     }
 
-    public function find($query)
+
+    public function find($query, $hydrate = true)
     {
-        $statement = $this->getStatement($query);
+        $sqlQuery  = $this->getSqlQuery($query);
+        $statement = $this->getStatement($sqlQuery);
         $params    = $this->getParameters($query);
         $results   = $this->runQuery($statement, $params);
+
+        $hydrates = $sqlQuery->getHydrates();
+        if ($hydrate && !empty($hydrates)) {
+            //echo "Need to hydrate!\n";
+        }
+
         return $results;
     }
 
@@ -77,21 +85,28 @@ class PdoDataSource implements DataSource
     }
 
 
-    protected function getStatement($query)
+    protected function getSqlQuery($query)
     {
-        $statement = null;
 
         $sqlBuilder = new SqlQueryBuilder();
         $sqlBuilder->setQuery($query);
         $sqlQuery   = $sqlBuilder->build();
+        //print_r($sqlQuery);
+        return $sqlQuery;
+    }
+
+
+    protected function getStatement($sqlQuery)
+    {
+        $statement = null;
 
         $sql = $sqlQuery->toString();
         //echo "SQL: {$sql}\n";
         $statement = $this->db->prepare($sql);
 
         // Set fetch-mode
-        if ($query->getModelClass()) {
-            $statement->setFetchMode(PDO::FETCH_CLASS, $query->getModelClass());
+        if ($sqlQuery->getModelClass()) {
+            $statement->setFetchMode(PDO::FETCH_CLASS, $sqlQuery->getModelClass());
         } else {
             $statement->setFetchMode(PDO::FETCH_OBJ);
         }
