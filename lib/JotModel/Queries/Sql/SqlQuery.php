@@ -3,11 +3,15 @@ namespace JotModel\Queries\Sql;
 
 class SqlQuery
 {
+    protected $modelClass;
+
     protected $table;
     protected $fields;
     protected $joins;
     protected $filters;
     protected $queryStructure;
+
+    protected $hydrates;
 
     protected $groups;
     protected $limit;
@@ -15,9 +19,22 @@ class SqlQuery
 
     public function __construct()
     {
-        $this->fields  = array();
-        $this->joins   = array();
-        $this->filters = array();
+        $this->fields   = array();
+        $this->joins    = array();
+        $this->filters  = array();
+        $this->hydrates = array();
+    }
+
+
+    public function setModelClass($modelClass)
+    {
+        $this->modelClass = $modelClass;
+    }
+
+
+    public function getModelClass()
+    {
+        return $this->modelClass;
     }
 
 
@@ -36,6 +53,18 @@ class SqlQuery
     public function setFields($fields)
     {
         $this->fields = $fields;
+    }
+
+
+    public function setHydrates($hydrates)
+    {
+        $this->hydrates = $hydrates;
+    }
+
+
+    public function getHydrates()
+    {
+        return $this->hydrates;
     }
 
 
