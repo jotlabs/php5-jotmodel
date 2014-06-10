@@ -6,12 +6,12 @@ class ContentEnvelope
     # TODO: Abstract these static properties into a schema class or config object
     public static $MODEL = 'content';
 
-    public static $SQL_QUERIES = array(
-        'getBySlug' => 'SELECT {fieldList} FROM `content_envelope` WHERE slug=:slug;'
-    );
-
     public static $SQL_FRAGMENTS = array(
-        'joins' => array()
+        'queries' => array(
+            'getBySlug' => 'SELECT {fieldList} FROM `content_envelope` WHERE slug=:slug;'
+        ),
+        'hydrate' => array(),
+        'joins'   => array()
     );
 
     public static $SQL_FIELDS = array(
