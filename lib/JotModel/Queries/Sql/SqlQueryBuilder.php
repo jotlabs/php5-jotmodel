@@ -99,7 +99,8 @@ class SqlQueryBuilder
     {
         $queryStructure = null;
         $modelClass     = $this->modelClass;
-        $modelQueries   = $modelClass::$SQL_QUERIES;
+        $fragments      = $modelClass::$SQL_FRAGMENTS;
+        $modelQueries   = $fragments['queries'];
 
         if ($this->queryName && array_key_exists($this->queryName, $modelQueries)) {
             $queryStructure = $modelQueries[$this->queryName];
