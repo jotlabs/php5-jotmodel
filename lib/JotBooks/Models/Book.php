@@ -8,7 +8,22 @@ class Book
         'queries' => array(
             'getBySlug' => 'SELECT {fieldList} from `books` WHERE slug = :slug'
         ),
-        'hydrate' => array(),
+        'hydrate' => array(
+            'authors' => array(
+                'modelClass' => 'JotBooks\Models\Author',
+                'paramField' => 'bookId',
+                'paramValue' => 'id',
+                'join'  => 'JOIN `book_authors` ON book_authors.authorId = authors.id',
+                'where' => array('book_authors.bookId' =>  'bookId')
+            ),
+            'publishers' => array(
+                'modelClass' => 'JotBooks\Models\Publisher',
+                'paramField' => 'bookId',
+                'paramValue' => 'id',
+                'join'       => 'JOIN `publishers` ON book_publishers.publisherId = publishers.id',
+                'where'      => array('book_publishers.bookId' => 'bookId')
+            )
+        ),
         'joins'   => array()
     );
 
@@ -19,8 +34,8 @@ class Book
         'slug'        => '',
         'isbn'        => '',
         'publishDate' => '',
-        'publisher'   => '@Publisher',
-        'authors'     => '@Author'
+        'publisher'   => '@publishers',
+        'authors'     => '@authors'
     );
 
 
