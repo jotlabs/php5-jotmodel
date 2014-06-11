@@ -2,9 +2,11 @@
 namespace JotModel\Queries\Sql;
 
 use JotModel\Queries\Sql\SqlQuery;
+use JotModel\Queries\Sql\HydrateSqlQuery;
 
 class SqlQueryBuilder
 {
+    protected $queryType = '';
     protected $query;
     protected $modelClass;
     protected $modelName;
@@ -16,6 +18,9 @@ class SqlQueryBuilder
     protected $sqlHydrates;
 
     protected $toHydrate;
+    protected $forAttribute;
+    protected $filterProperties = array();
+
 
     public function __construct()
     {
@@ -37,8 +42,18 @@ class SqlQueryBuilder
         $this->processSqlJoins($this->modelClass);
         $this->processSqlHydrates($this->modelClass);
 
-        $query = new SqlQuery();
+        $query = null;
 
+        if ($this->queryType === 'hydrate') {
+            $query = new HydrateSqlQuery();
+            $query->setForAttribute($this->forAttribute);
+            $query->setFilterProperties($this->filterProperties);
+
+        } else {
+            $query = new SqlQuery();
+        }
+
+        $query->setQueryName($this->queryName);
         $query->setModelClass($this->modelClass);
         $query->setTable($this->tableName);
         $query->setFilters($this->filters);
@@ -65,6 +80,27 @@ class SqlQueryBuilder
         $this->queryName  = $this->query->getQueryName();
         $this->filters    = $this->query->getFilters();
 
+        return $this;
+    }
+
+
+    public function setQueryType($queryType)
+    {
+        $this->queryType = $queryType;
+        return $this;
+    }
+
+
+    public function setForAttribute($attributeName)
+    {
+        $this->forAttribute = $attributeName;
+        return $this;
+    }
+
+
+    public function setFilterProperties($filterProperties)
+    {
+        $this->filterProperties = $filterProperties;
         return $this;
     }
 
@@ -124,6 +160,8 @@ class SqlQueryBuilder
 
                 $builder = new SqlQueryBuilder();
                 $builder
+                    ->setQueryType('hydrate')
+                    ->setForAttribute($field)
                     ->setModelClass($hydrateSpec['modelClass'])
                     ->setTableName($table)
                     ->setQueryName("{$this->modelName}.{$table}");
@@ -142,6 +180,7 @@ class SqlQueryBuilder
                         $filters = array($filters);
                     }
                     $builder->setFilters($filters);
+                    $builder->setFilterProperties($hydrateSpec['properties']);
                 }
 
                 //echo "Builder: ";
