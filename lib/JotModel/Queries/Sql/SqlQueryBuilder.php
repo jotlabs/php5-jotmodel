@@ -53,9 +53,9 @@ class SqlQueryBuilder
             $query = new SqlQuery();
         }
 
-        $query->setQueryName($this->queryName);
         $query->setModelClass($this->modelClass);
         $query->setTable($this->tableName);
+        $query->setQueryName("{$this->modelName}|{$this->queryName}");
         $query->setFilters($this->filters);
 
         $query->setFields($this->sqlFields);
@@ -164,7 +164,7 @@ class SqlQueryBuilder
                     ->setForAttribute($field)
                     ->setModelClass($hydrateSpec['modelClass'])
                     ->setTableName($table)
-                    ->setQueryName("{$this->modelName}.{$table}");
+                    ->setQueryName("getBy" . ucfirst($this->modelName));
 
                 if (array_key_exists('join', $hydrateSpec)) {
                     $join = $hydrateSpec['join'];
