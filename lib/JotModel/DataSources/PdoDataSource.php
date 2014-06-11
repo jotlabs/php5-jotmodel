@@ -56,12 +56,70 @@ class PdoDataSource implements DataSource
         $params    = $this->getParameters($query);
         $results   = $this->runQuery($statement, $params);
 
-        $hydrates = $sqlQuery->getHydrates();
-        if ($hydrate && !empty($hydrates)) {
+        if ($hydrate && $sqlQuery->hasHydrates()) {
             //echo "Need to hydrate!\n";
+            $results = $this->hydrateResults($results, $sqlQuery);
         }
 
         return $results;
+    }
+
+
+    protected function hydrateResults($results, $sqlQuery)
+    {
+        $hydratedResults = array();
+
+        foreach ($results as $row) {
+            $row = $this->hydrate($row, $sqlQuery);
+            $hydratedResults[] = $row;
+        }
+
+        return $hydratedResults;
+    }
+
+
+    protected function hydrate($row, $sqlQuery)
+    {
+        $hydrates = $sqlQuery->getHydrates();
+
+        foreach ($hydrates as $hydrateQuery) {
+            //print_r($hydrateQuery);
+            //print_r($row);
+
+            // Create and run the SQL statement
+            $statement = $this->getStatement($hydrateQuery);
+            $params    = $this->getHydrateParameters($hydrateQuery, $row);
+            $results   = $this->runQuery($statement, $params);
+
+            //print_r($results);
+
+            $attribute = $hydrateQuery->getForAttribute();
+            $row->$attribute = $results;
+        }
+
+        return $row;
+    }
+
+
+    protected function getHydrateParameters($query, $row)
+    {
+        $filterProps = $query->getFilterProperties();
+        $params = array();
+
+        foreach ($filterProps as $filterName => $filterProperty) {
+            $methodName = 'get' . ucfirst($filterProperty);
+            $paramName  = ":{$filterName}";
+
+            if (isset($row->$filterProperty)) {
+                $params[$paramName] = $row->$filterProperty;
+            } elseif (method_exists($row, $methodName)) {
+                $params[$paramName] = $row->$methodName();
+            } else {
+                echo "[ERROR-] Can't find row property {$filterProperty}.\n";
+            }
+        }
+
+        return $params;
     }
 
 
