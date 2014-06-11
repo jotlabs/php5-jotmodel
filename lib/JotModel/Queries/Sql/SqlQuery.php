@@ -75,6 +75,12 @@ class SqlQuery
     }
 
 
+    public function hasHydrates()
+    {
+        return !empty($this->hydrates);
+    }
+
+
     public function getHydrates()
     {
         return $this->hydrates;
