@@ -4,6 +4,7 @@ namespace JotModel\Queries\Sql;
 class SqlQuery
 {
     protected $modelClass;
+    protected $queryName;
 
     protected $table;
     protected $fields;
@@ -35,6 +36,18 @@ class SqlQuery
     public function getModelClass()
     {
         return $this->modelClass;
+    }
+
+
+    public function setQueryName($queryName)
+    {
+        $this->queryName = $queryName;
+    }
+
+
+    public function getQueryName()
+    {
+        return $this->queryName;
     }
 
 
