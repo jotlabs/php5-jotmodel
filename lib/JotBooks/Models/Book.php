@@ -14,14 +14,16 @@ class Book
                 'paramField' => 'bookId',
                 'paramValue' => 'id',
                 'join'  => 'JOIN `book_authors` ON book_authors.authorId = authors.id',
-                'where' => array('book_authors.bookId' =>  'bookId')
+                'where' => array('book_authors.bookId' =>  'bookId'),
+                'properties' => array('bookId' => 'id')
             ),
             'publishers' => array(
                 'modelClass' => 'JotBooks\Models\Publisher',
                 'paramField' => 'bookId',
                 'paramValue' => 'id',
-                'join'       => 'JOIN `publishers` ON book_publishers.publisherId = publishers.id',
-                'where'      => array('book_publishers.bookId' => 'bookId')
+                'join'       => 'JOIN `book_publishers` ON book_publishers.publisherId = publishers.id',
+                'where'      => array('book_publishers.bookId' => 'bookId'),
+                'properties' => array('bookId' => 'id')
             )
         ),
         'joins'   => array()
@@ -34,7 +36,7 @@ class Book
         'slug'        => '',
         'isbn'        => '',
         'publishDate' => '',
-        'publisher'   => '@publishers',
+        'publishers'  => '@publishers',
         'authors'     => '@authors'
     );
 
@@ -48,6 +50,12 @@ class Book
     public $isbn;
     public $publishDate;
 
-    public $publisher;
+    public $publishers;
     public $authors;
+
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }
