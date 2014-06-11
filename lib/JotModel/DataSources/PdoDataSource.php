@@ -115,7 +115,8 @@ class PdoDataSource implements DataSource
             } elseif (method_exists($row, $methodName)) {
                 $params[$paramName] = $row->$methodName();
             } else {
-                echo "[ERROR-] Can't find row property {$filterProperty}.\n";
+                $className = get_class($row);
+                echo "[ERROR-] Can't find row property {$filterProperty} in {$className}.\n";
             }
         }
 
