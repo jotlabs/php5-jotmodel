@@ -161,6 +161,7 @@ class PdoDataSource implements DataSource
         $sql = $sqlQuery->toString();
         //echo "SQL: {$sql}\n";
         $statement = $this->db->prepare($sql);
+        $this->checkErrors($statement);
 
         // Set fetch-mode
         if ($sqlQuery->getModelClass()) {
@@ -170,5 +171,31 @@ class PdoDataSource implements DataSource
         }
 
         return $statement;
+    }
+
+
+    protected function checkErrors($statement)
+    {
+        $isError = false;
+
+        if ($statement) {
+            $errorCode = $statement->errorCode();
+            if ($errorCode && $errorCode !== '00000') {
+                $errorInfo = $statement->errorInfo();
+                echo "[ERROR-] PDO Statement error {$errorCode}: {$errorInfo[2]}\n";
+                $isError = true;
+            }
+
+        } else {
+            $errorInfo = $this->db->errorInfo();
+            if ($errorCode && $errorCode !== '00000') {
+                $errorInfo = $this->db->errorInfo();
+                echo "[ERROR-] PDO Database error {$errorCode}: {$errorInfo[2]}\n";
+                $isError = true;
+            }
+
+        }
+
+        return $isError;
     }
 }
