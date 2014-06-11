@@ -189,7 +189,7 @@ class PdoDataSource implements DataSource
     }
 
 
-    protected function checkErrors($statement)
+    protected function isPdoError($statement)
     {
         $isError = false;
 
@@ -202,7 +202,7 @@ class PdoDataSource implements DataSource
             }
 
         } else {
-            $errorInfo = $this->db->errorInfo();
+            $errorCode = $this->db->errorCode();
             if ($errorCode && $errorCode !== '00000') {
                 $errorInfo = $this->db->errorInfo();
                 echo "[ERROR-] PDO Database error {$errorCode}: {$errorInfo[2]}\n";
