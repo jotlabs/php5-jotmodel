@@ -38,5 +38,20 @@ class BookRepositoryTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_a($book, 'JotBooks\Models\Book'));
 
         //print_r($book);
+
+        $this->assertNotNull($book->authors);
+        $this->assertEquals(1, count($book->authors));
+        $author = $book->authors[0];
+
+        $this->assertTrue(is_a($author, 'JotBooks\Models\Author'));
+        $this->assertEquals('colin-crouch', $author->slug);
+
+        $this->assertNotNull($book->publishers);
+        $this->assertEquals(1, count($book->publishers));
+        $publisher = $book->publishers[0];
+
+        $this->assertTrue(is_a($publisher, 'JotBooks\Models\Publisher'));
+        $this->assertEquals('everyman-chess', $publisher->slug);
+
     }
 }
