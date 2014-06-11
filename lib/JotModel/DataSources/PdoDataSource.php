@@ -158,18 +158,32 @@ class PdoDataSource implements DataSource
     protected function getStatement($sqlQuery)
     {
         $statement = null;
+        $queryName = $sqlQuery->getQueryName();
 
-        $sql = $sqlQuery->toString();
-        //echo "SQL: {$sql}\n";
-        $statement = $this->db->prepare($sql);
-        $this->checkErrors($statement);
+        if (array_key_exists($queryName, $this->stmCache)) {
+            $statement = $this->stmCache[$queryName];
+            //echo '*';
 
-        // Set fetch-mode
-        if ($sqlQuery->getModelClass()) {
-            $statement->setFetchMode(PDO::FETCH_CLASS, $sqlQuery->getModelClass());
         } else {
-            $statement->setFetchMode(PDO::FETCH_OBJ);
+            $sql = $sqlQuery->toString();
+            //echo "SQL: {$sql}\n";
+            $statement = $this->db->prepare($sql);
+
+            if (!$this->isPdoError($statement)) {
+
+                // Set fetch-mode
+                if ($sqlQuery->getModelClass()) {
+                    $statement->setFetchMode(PDO::FETCH_CLASS, $sqlQuery->getModelClass());
+                } else {
+                    $statement->setFetchMode(PDO::FETCH_OBJ);
+                }
+
+                // Cache prepared statement
+                $this->stmCache[$queryName] = $statement;
+                //echo '!', $queryName;
+            }
         }
+
 
         return $statement;
     }
