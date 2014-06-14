@@ -18,8 +18,9 @@ class EnvelopeContentTest extends PHPUnit_Framework_TestCase
         $this->model = new TestModel();
 
         $envelope = new ContentEnvelope();
-        $envelope->slug = 'envelopeSlug';
-        $envelope->title = 'envelopeTitle';
+        $envelope->slug    = 'envelopeSlug';
+        $envelope->title   = 'envelopeTitle';
+        $envelope->excerpt = 'envelopeExcerpt';
 
         $this->model->setEnvelope($envelope);
     }
@@ -49,5 +50,19 @@ class EnvelopeContentTest extends PHPUnit_Framework_TestCase
     public function testGetEnvelopePropertyReturnsEnvelopePropertyValue()
     {
         $this->assertEquals('envelopeTitle', $this->model->getTitle());
+    }
+
+
+    public function testGetEnvelopePropertyDirectlyReturnsEnvelopeProperty()
+    {
+        $this->assertEquals('envelopeExcerpt', $this->model->excerpt);
+    }
+
+
+    public function testGetEnvelopeReturnsEnvelopeObject()
+    {
+        $envelope = $this->model->getEnvelope();
+        $this->assertNotNull($envelope);
+        $this->assertTrue(is_a($envelope, 'JotModel\Models\ContentEnvelope'));
     }
 }
