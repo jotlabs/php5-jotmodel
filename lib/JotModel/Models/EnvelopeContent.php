@@ -29,9 +29,16 @@ abstract class EnvelopeContent
         return $this->getOverlaidProperty('slug');
     }
 
+
     public function getTitle()
     {
         return $this->getOverlaidProperty('title');
+    }
+
+
+    public function __get($propName)
+    {
+        return $this->getOverlaidProperty($propName);
     }
 
 
