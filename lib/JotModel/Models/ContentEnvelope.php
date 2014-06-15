@@ -18,6 +18,7 @@ class ContentEnvelope
         'envelopeId'    => 'envelopeId',
         'contentId'     => 'contentId',
         'status'        => 'status',
+        'type'          => 'type',
         'model'         => 'model',
         'slug'          => 'slug',
         'title'         => 'title',
