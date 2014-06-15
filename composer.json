@@ -17,7 +17,8 @@
     "autoload": {
         "psr-0": {
             "JotBooks\\": "lib/",
-            "JotModel\\": "lib/"
+            "JotModel\\": "lib/",
+            "JotModelExamples\\": "lib/"
         }
     }
 }
