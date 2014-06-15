@@ -92,3 +92,22 @@ FROM `content`
 LEFT JOIN `content_status` ON content.statusId = content_status.id
 LEFT JOIN `content_models` ON content.modelId  = content_models.id
 LEFT JOIN `content_types`  ON content_models.typeId = content_types.id;
+
+
+--
+-- Content: Videos (from YouTube)
+--
+CREATE TABLE IF NOT EXISTS `videos` (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    sourceId        VARCHAR(63) UNIQUE,
+    sourceUrl       VARCHAR(255) UNIQUE,
+
+    posterName      VARCHAR(255),
+    posterProfile   VARCHAR(255),
+    datePosted      DATETIME,
+
+    duration        INTEGER,
+    numberViews     INTEGER
+);
+
