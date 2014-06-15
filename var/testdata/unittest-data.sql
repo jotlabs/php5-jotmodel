@@ -22,3 +22,20 @@ INSERT INTO `content` VALUES (14,1,1,14,'mysore-style-ashtanga-omkar-108-yoga','
 INSERT INTO `content` VALUES (15,1,1,15,'ashtanga-yoga-start-practice-standing-poses-2','ashtanga yoga start practice & standing poses.2','practice along with lap top. free guided ashtanaga yoga 1st series led by Peter Hurley next video has seated and finishing poses.','/video/ashtanga-yoga-start-practice-standing-poses-2','IMAGE','2013-06-03 22:18:26','2013-06-03 21:18:26');
 INSERT INTO `content` VALUES (16,1,1,16,'introduction-to-ashtanga-yoga-with-kino-macgregor','Introduction to Ashtanga Yoga with Kino MacGregor','http://www.kinoyoga.com If you''re new to the practice of yoga this clip will give you a feeling for the Ashtanga Yoga method. Taken from a live class availab...','/video/introduction-to-ashtanga-yoga-with-kino-macgregor','IMAGE','2013-06-03 22:18:26','2013-06-03 21:18:26');
 
+-- videos
+INSERT INTO `videos` VALUES (1,'aUgtMaAZzW0','https://www.youtube.com/watch?v=aUgtMaAZzW0','Adam Wade','https://gdata.youtube.com/feeds/api/users/adamwade','2014-05-29 18:00:07',4688,962611);
+INSERT INTO `videos` VALUES (2,'rAaHx5qsqhY','https://www.youtube.com/watch?v=rAaHx5qsqhY','yogatoday','https://gdata.youtube.com/feeds/api/users/yogatoday','2013-10-07 18:00:02',3705,586976);
+INSERT INTO `videos` VALUES (3,'PAjTqLQU01g','https://www.youtube.com/watch?v=PAjTqLQU01g','KinoYoga','https://gdata.youtube.com/feeds/api/users/KinoYoga','2014-05-28 18:00:04',895,265243);
+INSERT INTO `videos` VALUES (4,'BHtqOxBCwR0','https://www.youtube.com/watch?v=BHtqOxBCwR0','gcbhswellness','https://gdata.youtube.com/feeds/api/users/gcbhswellness','2012-03-03 17:24:12',6062,40341);
+INSERT INTO `videos` VALUES (5,'diPJ0r-QTGU','https://www.youtube.com/watch?v=diPJ0r-QTGU','KinoYoga','https://gdata.youtube.com/feeds/api/users/KinoYoga','2014-05-28 18:00:04',594,173881);
+INSERT INTO `videos` VALUES (6,'FaaXAjDlzhY','https://www.youtube.com/watch?v=FaaXAjDlzhY','BeÃ¡ta BeregszÃ¡szi','https://gdata.youtube.com/feeds/api/users/Bedybaba89','2013-03-25 01:48:44',4168,1606);
+INSERT INTO `videos` VALUES (7,'JoHxl2k10xw','https://www.youtube.com/watch?v=JoHxl2k10xw','yogatic','https://gdata.youtube.com/feeds/api/users/yogatic','2014-05-29 06:00:07',196,53226);
+INSERT INTO `videos` VALUES (8,'Hu9Sq1RvuoA','https://www.youtube.com/watch?v=Hu9Sq1RvuoA','steven green','https://gdata.youtube.com/feeds/api/users/prajnayoga','2014-05-30 06:00:07',466,2896332);
+INSERT INTO `videos` VALUES (9,'nPHTZ7Hc7Hg','https://www.youtube.com/watch?v=nPHTZ7Hc7Hg','Diarodelaprendiz','https://gdata.youtube.com/feeds/api/users/Diarodelaprendiz','2014-05-30 06:00:07',6357,88952);
+INSERT INTO `videos` VALUES (10,'DrHBZRty2HE','https://www.youtube.com/watch?v=DrHBZRty2HE','goldcoastyogacentre','https://gdata.youtube.com/feeds/api/users/goldcoastyogacentre','2014-05-30 06:00:07',417,104315);
+INSERT INTO `videos` VALUES (11,'eumyEaHVGbk','https://www.youtube.com/watch?v=eumyEaHVGbk','klexandr','https://gdata.youtube.com/feeds/api/users/klexandr','2014-05-28 18:00:09',5015,125516);
+INSERT INTO `videos` VALUES (12,'i_3pyjr0fDQ','https://www.youtube.com/watch?v=i_3pyjr0fDQ','George Charisis','https://gdata.youtube.com/feeds/api/users/baroque15','2014-05-28 06:00:14',310,7367);
+INSERT INTO `videos` VALUES (13,'XAu_jhvYpVU','https://www.youtube.com/watch?v=XAu_jhvYpVU','dharmashalayoga','https://gdata.youtube.com/feeds/api/users/dharmashalayoga','2014-05-29 18:00:07',935,26859);
+INSERT INTO `videos` VALUES (14,'k5-4-L6wA_g','https://www.youtube.com/watch?v=k5-4-L6wA_g','Pranidhi Varshney','https://gdata.youtube.com/feeds/api/users/PranidhiV','2014-05-29 18:00:09',340,19050);
+INSERT INTO `videos` VALUES (15,'tZO7Ylcn8uc','https://www.youtube.com/watch?v=tZO7Ylcn8uc','Peter Hurley','https://gdata.youtube.com/feeds/api/users/pjhurley100','2014-05-26 18:00:05',2248,116417);
+INSERT INTO `videos` VALUES (16,'JpBDEJXq8EQ','https://www.youtube.com/watch?v=JpBDEJXq8EQ','KinoYoga','https://gdata.youtube.com/feeds/api/users/KinoYoga','2014-05-24 06:00:06',433,19314);
