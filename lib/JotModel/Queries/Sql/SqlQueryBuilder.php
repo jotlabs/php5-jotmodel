@@ -6,6 +6,8 @@ use JotModel\Queries\Sql\HydrateSqlQuery;
 
 class SqlQueryBuilder
 {
+    const CONTENT_ENVELOPE_CLASS = 'JotModel\Models\ContentEnvelope';
+
     protected $queryType = '';
     protected $query;
     protected $modelClass;
@@ -41,6 +43,7 @@ class SqlQueryBuilder
         $this->processSqlFields($this->modelClass);
         $this->processSqlJoins($this->modelClass);
         $this->processSqlHydrates($this->modelClass);
+        $this->processContentEnvelope($this->modelClass);
 
         $query = null;
 
@@ -141,6 +144,10 @@ class SqlQueryBuilder
     protected function processSqlModelName($modelClass)
     {
         $this->modelName = $modelClass::$MODEL;
+
+        if (!$this->tableName) {
+            $this->tableName = $this->modelName;
+        }
     }
 
 
@@ -220,6 +227,7 @@ class SqlQueryBuilder
 
     protected function processSqlJoins($modelClass)
     {
+        $sqlJoins   = array();
         $fragments  = $modelClass::$SQL_FRAGMENTS;
 
         if (array_key_exists('joins', $fragments)) {
@@ -231,6 +239,33 @@ class SqlQueryBuilder
         }
 
         $this->sqlJoins = array_merge($this->sqlJoins, $sqlJoins);
+    }
+
+
+    protected function processContentEnvelope($modelClass)
+    {
+        if (is_subclass_of($modelClass, self::CONTENT_ENVELOPE_CLASS)) {
+            $envelopeClass = self::CONTENT_ENVELOPE_CLASS;
+
+            // Add content envelope join
+            $this->sqlJoins[] = "LEFT JOIN `content_envelope` AS `ce` "
+                                . "ON  ce.model = 'video' "
+                                . "AND {$this->tableName}.id = ce.contentId";
+
+            // Add content_envelope fields
+            $envelopeFields = $envelopeClass::$SQL_FIELDS;
+
+            foreach ($envelopeFields as $property => $sqlField) {
+                if (strpos($sqlField, '@') === 0) {
+                    // hydrated field, do nothing.
+                    //$this->toHydrate[$property] = substr($sqlField, 1);
+                } elseif (!$sqlField || $property === $sqlField) {
+                    $this->sqlFields[] = $property;
+                } else {
+                    $this->sqlFields[] = "{$sqlField} AS {$property}";
+                }
+            }
+        }
     }
 
 
