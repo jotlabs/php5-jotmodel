@@ -15,8 +15,8 @@ class ContentEnvelope
     );
 
     public static $SQL_FIELDS = array(
-        'envelopeId'    => '_envelope_id',
-        'contentId'     => '_content_id',
+        'envelopeId'    => 'envelopeId',
+        'contentId'     => 'contentId',
         'status'        => 'status',
         'model'         => 'model',
         'slug'          => 'slug',
