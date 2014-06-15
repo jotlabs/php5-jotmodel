@@ -10,25 +10,25 @@ class Video extends ContentEnvelope
 
     public static $SQL_FRAGMENTS = array(
         'queries' => array(
-            'getById' => 'SELECT {fieldList} FROM `videos` WHERE _id=:id;'
+            'getBySlug' => 'SELECT {fieldList} FROM `videos` {joins} WHERE slug=:slug;'
         ),
         'joins' => array(),
         'hydrate' => array(
-            'video_blobs' => array(
-                'modelClass' => 'LotsOfYoga\Model\Models\VideoBlob',
-                'where'      => array('videoId' => 'videoId'),
-                'properties' => array('videoId' => 'id')
-            ),
-            'video_images' => array(
-                'modelClass' => 'LotsOfYoga\Model\Models\VideoImage',
-                'where'      => array('videoId' => 'videoId'),
-                'properties' => array('videoId' => 'id')
-            )
+            //'video_blobs' => array(
+            //    'modelClass' => 'LotsOfYoga\Model\Models\VideoBlob',
+            //    'where'      => array('videoId' => 'videoId'),
+            //    'properties' => array('videoId' => 'id')
+            //),
+            //'video_images' => array(
+            //    'modelClass' => 'LotsOfYoga\Model\Models\VideoImage',
+            //    'where'      => array('videoId' => 'videoId'),
+            //    'properties' => array('videoId' => 'id')
+            //)
         )
     );
 
     public static $SQL_FIELDS = array(
-        'id'            => '_id',
+        'id'            => '',
         'sourceId'      => '',
         'sourceUrl'     => '',
         'posterName'    => '',
@@ -38,8 +38,8 @@ class Video extends ContentEnvelope
         'numberViews'   => '',
 
         // Sub-models
-        'blobs'         => '@video_blobs',
-        'images'        => '@video_images'
+        //'blobs'         => '@video_blobs',
+        //'images'        => '@video_images'
     );
 
 
