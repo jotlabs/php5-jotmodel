@@ -53,11 +53,17 @@ CREATE TABLE IF NOT EXISTS `content` (
     title           VARCHAR(255),
     excerpt         TEXT,
 
+    extra1          VARCHAR(255),
+    extra2          VARCHAR(255),
+
     permalink       VARCHAR(255) UNIQUE,
     imageTemplate   VARCHAR(255),
 
     dateAdded       DATETIME,
     dateUpdated     TIMESTAMP,
+
+    version         INTEGER,
+    score           INTEGER,
 
     FOREIGN KEY (`modelId`)  REFERENCES `content_models`(`id`),
     FOREIGN KEY (`statusId`) REFERENCES `content_status`(`id`)
@@ -84,10 +90,14 @@ SELECT
     content.slug          AS slug,
     content.title         AS title,
     content.excerpt       AS excerpt,
+    content.extra1        AS extra1,
+    content.extra2        AS extra2,
     content.permalink     AS permalink,
     content.imageTemplate AS imageTemplate,
     content.dateAdded     AS dateAdded,
-    content.dateUpdated   AS dateUpdated
+    content.dateUpdated   AS dateUpdated,
+    content.version       AS version,
+    content.score         AS score
 FROM `content`
 LEFT JOIN `content_status` ON content.statusId = content_status.id
 LEFT JOIN `content_models` ON content.modelId  = content_models.id
