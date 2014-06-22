@@ -121,3 +121,38 @@ CREATE TABLE IF NOT EXISTS `videos` (
     numberViews     INTEGER
 );
 
+
+--
+-- Model: Tags
+-- Decorates: ContentEnvelope
+--
+
+CREATE TABLE IF NOT EXISTS `tag_collections` (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    slug            VARCHAR(31) UNIQUE,
+    name            VARCHAR(31)
+);
+
+
+CREATE TABLE IF NOT EXISTS `tags` (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    collectionId    INTEGER,
+    slug            VARCHAR(31) UNIQUE,
+    name            VARCHAR(31),
+
+    FOREIGN KEY (`collectionId`) REFERENCES `tag_collections`(`id`)
+);
+
+
+CREATE TABLE IF NOT EXISTS `content_tags` (
+    contentId   INTEGER,
+    tagId       INTEGER,
+    dateAdded   DATETIME,
+
+    FOREIGN KEY (`contentId`) REFERENCES `content`(`envelopeId`),
+    FOREIGN KEY (`tagId`)     REFERENCES `tags`(`id`)
+);
+
+CREATE INDEX `content_tags_1` ON `content_tags` (`contentId`, `tagId`);
+CREATE INDEX `content_tags_2` ON `content_tags` (`tagId`, `contentId`);
+
