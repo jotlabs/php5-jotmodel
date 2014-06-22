@@ -23,10 +23,14 @@ class ContentEnvelope
         'slug'          => 'slug',
         'title'         => 'title',
         'excerpt'       => 'excerpt',
+        'extra1'        => 'extra1',
+        'extra2'        => 'extra2',
         'permalink'     => 'permalink',
         'imageTemplate' => 'imageTemplate',
         'dateAdded'     => 'dateAdded',
-        'dateUpdated'   => 'dateUpdated'
+        'dateUpdated'   => 'dateUpdated',
+        'version'       => 'version',
+        'score'         => 'score'
     );
 
 
@@ -39,10 +43,15 @@ class ContentEnvelope
     public $slug;
     public $title;
     public $excerpt;
+    public $extra1;
+    public $extra2;
 
     public $permalink;
     public $imageTemplate;
 
     public $dateAdded;
     public $dateUpdated;
+
+    public $version;
+    public $score;
 }
