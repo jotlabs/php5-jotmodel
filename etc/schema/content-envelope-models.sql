@@ -74,6 +74,7 @@ CREATE INDEX `content_2` ON `content` ( modelId, contentId );
 CREATE INDEX `content_3` ON `content` ( slug );
 
 --
+-- View Model: ContentEnvelope
 -- A one-table view of the four relational content envelope tables
 -- TODO: make into a pseudo-materialised view.
 --
