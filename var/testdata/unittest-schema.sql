@@ -74,6 +74,7 @@ CREATE INDEX `content_2` ON `content` ( modelId, contentId );
 CREATE INDEX `content_3` ON `content` ( slug );
 
 --
+-- View Model: ContentEnvelope
 -- A one-table view of the four relational content envelope tables
 -- TODO: Replace with a pseudo-materialised view
 --
@@ -155,4 +156,21 @@ CREATE TABLE IF NOT EXISTS `content_tags` (
 
 CREATE INDEX `content_tags_1` ON `content_tags` (`contentId`, `tagId`);
 CREATE INDEX `content_tags_2` ON `content_tags` (`tagId`, `contentId`);
+
+--
+-- VIEW Model: Tag
+--
+CREATE VIEW `tagged_content` AS
+SELECT
+    content_tags.contentId AS envelopeId,
+    content_tags.tagId     AS tagId,
+    tags.slug              AS tag,
+    tags.name              AS name,
+    tags.collectionId      AS collectionId,
+    tag_collections.slug   AS collectionSlug,
+    tag_collections.name   AS collectionName,
+    content_tags.dateAdded AS dateAdded
+FROM `content_tags`
+LEFT JOIN `tags` ON `content_tags`.tagId = `tags`.id
+LEFT JOIN `tag_collections` ON `tags`.collectionId = `tag_collections`.id;
 
