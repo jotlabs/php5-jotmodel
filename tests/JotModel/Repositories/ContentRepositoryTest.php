@@ -39,5 +39,7 @@ class ContentRepositoryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($slug, $content->slug);
         $this->assertEquals('video', $content->model);
         $this->assertEquals('A', $content->status);
+
+        $this->assertEquals(1, $content->version);
     }
 }
