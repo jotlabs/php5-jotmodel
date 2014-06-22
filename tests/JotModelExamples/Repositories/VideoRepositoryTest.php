@@ -42,5 +42,6 @@ class VideoRepositoryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('video', $video->model);
         $this->assertEquals('video', $video->type);
         $this->assertEquals('rAaHx5qsqhY', $video->sourceId);
+        $this->assertEquals(1, $video->version);
     }
 }
