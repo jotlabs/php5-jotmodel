@@ -37,4 +37,13 @@ class ContentEnvelopeTest extends PHPUnit_Framework_TestCase
     {
         $this->assertTrue(property_exists($this->model, 'envelopeId'));
     }
+
+
+    public function testExtraFieldsRetrievable()
+    {
+        $this->assertTrue(property_exists($this->model, 'extra1'));
+        $this->assertTrue(property_exists($this->model, 'extra2'));
+        $this->assertTrue(property_exists($this->model, 'version'));
+        $this->assertTrue(property_exists($this->model, 'score'));
+    }
 }
