@@ -39,3 +39,35 @@ INSERT INTO `videos` VALUES (13,'XAu_jhvYpVU','https://www.youtube.com/watch?v=X
 INSERT INTO `videos` VALUES (14,'k5-4-L6wA_g','https://www.youtube.com/watch?v=k5-4-L6wA_g','Pranidhi Varshney','https://gdata.youtube.com/feeds/api/users/PranidhiV','2014-05-29 18:00:09',340,19050);
 INSERT INTO `videos` VALUES (15,'tZO7Ylcn8uc','https://www.youtube.com/watch?v=tZO7Ylcn8uc','Peter Hurley','https://gdata.youtube.com/feeds/api/users/pjhurley100','2014-05-26 18:00:05',2248,116417);
 INSERT INTO `videos` VALUES (16,'JpBDEJXq8EQ','https://www.youtube.com/watch?v=JpBDEJXq8EQ','KinoYoga','https://gdata.youtube.com/feeds/api/users/KinoYoga','2014-05-24 06:00:06',433,19314);
+
+
+INSERT INTO `tag_collections` VALUES(1, 'uncategorised', 'Uncategorised');
+INSERT INTO `tag_collections` VALUES(2, 'styles',        'Styles');
+INSERT INTO `tag_collections` VALUES(3, 'poses',         'Poses');
+INSERT INTO `tag_collections` VALUES(4, 'teachers',      'Teachers');
+
+INSERT INTO `tags` VALUES(1, 2, 'ashtanga',            'Ashtanga');
+INSERT INTO `tags` VALUES(2, 4, 'kino-macgregor',      'Kino MacGregor');
+INSERT INTO `tags` VALUES(3, 4, 'sri-k-pattabhi-jois', 'Sri K. Pattabhi Jois');
+
+INSERT INTO `content_tags` VALUES(1, 1, '2014-06-01');
+INSERT INTO `content_tags` VALUES(1, 3, '2014-06-01');
+INSERT INTO `content_tags` VALUES(2, 1, '2014-06-01');
+INSERT INTO `content_tags` VALUES(3, 1, '2014-06-01');
+INSERT INTO `content_tags` VALUES(3, 2, '2014-06-01');
+INSERT INTO `content_tags` VALUES(4, 1, '2014-06-01');
+INSERT INTO `content_tags` VALUES(5, 1, '2014-06-01');
+INSERT INTO `content_tags` VALUES(5, 2, '2014-06-01');
+INSERT INTO `content_tags` VALUES(6, 1, '2014-06-01');
+INSERT INTO `content_tags` VALUES(7, 1, '2014-06-01');
+INSERT INTO `content_tags` VALUES(8, 1, '2014-06-01');
+INSERT INTO `content_tags` VALUES(9, 1, '2014-06-01');
+INSERT INTO `content_tags` VALUES(9, 3, '2014-06-01');
+INSERT INTO `content_tags` VALUES(10, 1, '2014-06-01');
+INSERT INTO `content_tags` VALUES(11, 1, '2014-06-01');
+INSERT INTO `content_tags` VALUES(12, 1, '2014-06-01');
+INSERT INTO `content_tags` VALUES(13, 1, '2014-06-01');
+INSERT INTO `content_tags` VALUES(14, 1, '2014-06-01');
+INSERT INTO `content_tags` VALUES(15, 1, '2014-06-01');
+INSERT INTO `content_tags` VALUES(16, 1, '2014-06-01');
+INSERT INTO `content_tags` VALUES(16, 2, '2014-06-01');
