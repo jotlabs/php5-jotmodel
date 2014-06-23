@@ -151,63 +151,6 @@ class SqlQueryBuilder
     }
 
 
-    protected function processSqlHydrates($modelClass)
-    {
-        $fragments    = $modelClass::$SQL_FRAGMENTS;
-        $hydrateSpecs = $fragments['hydrate'];
-
-        //echo "Model Name: {$this->modelName}\n";
-
-        foreach ($this->toHydrate as $field => $table) {
-            if (array_key_exists($table, $hydrateSpecs)) {
-                $hydrateSpec = $hydrateSpecs[$table];
-
-                //echo "Hydrate spec for {$table}: ";
-                //print_r($hydrateSpec);
-
-                $builder = new SqlQueryBuilder();
-                $builder
-                    ->setQueryType('hydrate')
-                    ->setForAttribute($field)
-                    ->setModelClass($hydrateSpec['modelClass'])
-                    ->setTableName($table)
-                    ->setQueryName("getBy" . ucfirst($this->modelName));
-
-                if (array_key_exists('join', $hydrateSpec)) {
-                    $join = $hydrateSpec['join'];
-                    if (!is_array($join)) {
-                        $join = array($join);
-                    }
-                    $builder->setJoins($join);
-                }
-
-                if (array_key_exists('where', $hydrateSpec)) {
-                    $filters = $hydrateSpec['where'];
-                    if (!is_array($filters)) {
-                        $filters = array($filters);
-                    }
-                    $builder->setFilters($filters);
-                    $builder->setFilterProperties($hydrateSpec['properties']);
-                }
-
-                //echo "Builder: ";
-                //print_r($builder);
-
-                $sqlQuery = $builder->build();
-
-                //echo "SQL Query: ";
-                //print_r($sqlQuery);
-                //echo "SQL: ", $sqlQuery->toString(), "\n";
-
-                $this->sqlHydrates[] = $sqlQuery;
-            }
-        }
-
-        //echo "SQL Hydrates for {$modelClass}: ";
-        //print_r($this->sqlHydrates);
-    }
-
-
     protected function processSqlFields($modelClass)
     {
         $modelFields = $modelClass::$SQL_FIELDS;
@@ -265,7 +208,96 @@ class SqlQueryBuilder
                     $this->sqlFields[] = "{$sqlField} AS {$property}";
                 }
             }
+
+            echo "Checking for hydrates: \n";
+            $envelopeDecorators = $envelopeClass::$DECORATORS;
+
+            if (!empty($envelopeDecorators)) {
+                $envelopeFragments  = $envelopeClass::$SQL_FRAGMENTS;
+
+                foreach ($envelopeDecorators as $decorator) {
+                    if (array_key_exists($decorator, $envelopeFragments['hydrate'])) {
+                        echo "Adding envelope hydrates\n";
+                        $hydrateSpec = $envelopeFragments['hydrate'][$decorator];
+                        print_r($hydrateSpec);
+
+                        $sqlQuery = $this->createHydrateQuery($decorator, $hydrateSpec);
+                        $this->sqlHydrates[] = $sqlQuery;
+                    }
+                }
+            }
         }
+    }
+
+
+    protected function processSqlHydrates($modelClass)
+    {
+        $fragments    = $modelClass::$SQL_FRAGMENTS;
+        $hydrateSpecs = $fragments['hydrate'];
+
+        //echo "Model Name: {$this->modelName}\n";
+
+        foreach ($this->toHydrate as $field => $table) {
+            if (array_key_exists($table, $hydrateSpecs)) {
+                $hydrateSpec = $hydrateSpecs[$table];
+
+                if (empty($hydrateSpec['tableName'])) {
+                    $hydrateSpec['tableName'] = $table;
+                }
+
+                $sqlQuery = $this->createHydrateQuery($field, $hydrateSpec);
+                $this->sqlHydrates[] = $sqlQuery;
+            }
+        }
+
+        //echo "SQL Hydrates for {$modelClass}: ";
+        //print_r($this->sqlHydrates);
+    }
+
+
+    protected function createHydrateQuery($hydrateModel, $hydrateSpec)
+    {
+        // Need to get these:
+        $queryName = "getBy" .  ucfirst('envelopeId');
+
+        $modelClass = $hydrateSpec['modelClass'];
+        $table      = $hydrateSpec['tableName'];
+
+        $builder = new SqlQueryBuilder();
+        $builder
+            ->setQueryType('hydrate')
+            ->setForAttribute($hydrateModel)
+            ->setModelClass($modelClass)
+            ->setTableName($table)
+            ->setQueryName($queryName);
+
+        if (array_key_exists('join', $hydrateSpec)) {
+            $join = $hydrateSpec['join'];
+            if (!is_array($join)) {
+                $join = array($join);
+            }
+            $builder->setJoins($join);
+        }
+
+        if (array_key_exists('where', $hydrateSpec)) {
+            $filters = $hydrateSpec['where'];
+            if (!is_array($filters)) {
+                $filters = array($filters);
+            }
+            $builder->setFilters($filters);
+            $builder->setFilterProperties($hydrateSpec['properties']);
+        }
+
+        echo "Builder: ";
+        print_r($builder);
+
+        $sqlQuery = $builder->build();
+
+        echo "SQL Query: ";
+        print_r($sqlQuery);
+        echo "SQL: ", $sqlQuery->toString(), "\n";
+
+        return $sqlQuery;
     }
 
 
