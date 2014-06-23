@@ -47,5 +47,11 @@ class VideoRepositoryTest extends PHPUnit_Framework_TestCase
         // Check we have tags
         $this->assertTrue(!empty($video->tags));
         $this->assertNotNull($video->tags);
+
+        $this->assertTrue(is_array($video->tags));
+        $this->assertEquals(1, count($video->tags));
+        $tag = $video->tags[0];
+        $this->assertNotNull($tag);
+        $this->assertTrue(is_a($tag, 'JotModel\Models\Tag'));
     }
 }
