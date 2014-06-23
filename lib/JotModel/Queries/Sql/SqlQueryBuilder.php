@@ -209,7 +209,7 @@ class SqlQueryBuilder
                 }
             }
 
-            echo "Checking for hydrates: \n";
+            //echo "Checking for hydrates: \n";
             $envelopeDecorators = $envelopeClass::$DECORATORS;
 
             if (!empty($envelopeDecorators)) {
@@ -217,9 +217,9 @@ class SqlQueryBuilder
 
                 foreach ($envelopeDecorators as $decorator) {
                     if (array_key_exists($decorator, $envelopeFragments['hydrate'])) {
-                        echo "Adding envelope hydrates\n";
+                        //echo "Adding envelope hydrates\n";
                         $hydrateSpec = $envelopeFragments['hydrate'][$decorator];
-                        print_r($hydrateSpec);
+                        //print_r($hydrateSpec);
 
                         $sqlQuery = $this->createHydrateQuery($decorator, $hydrateSpec);
                         $this->sqlHydrates[] = $sqlQuery;
@@ -288,14 +288,14 @@ class SqlQueryBuilder
             $builder->setFilterProperties($hydrateSpec['properties']);
         }
 
-        echo "Builder: ";
-        print_r($builder);
+        //echo "Builder: ";
+        //print_r($builder);
 
         $sqlQuery = $builder->build();
 
-        echo "SQL Query: ";
-        print_r($sqlQuery);
-        echo "SQL: ", $sqlQuery->toString(), "\n";
+        //echo "SQL Query: ";
+        //print_r($sqlQuery);
+        //echo "SQL: ", $sqlQuery->toString(), "\n";
 
         return $sqlQuery;
     }
