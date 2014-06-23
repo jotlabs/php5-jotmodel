@@ -6,11 +6,21 @@ class ContentEnvelope
     # TODO: Abstract these static properties into a schema class or config object
     public static $MODEL = 'content';
 
+    public static $DECORATORS = array('tags');
+
     public static $SQL_FRAGMENTS = array(
         'queries' => array(
             'getBySlug' => 'SELECT {fieldList} FROM `content_envelope` WHERE slug=:slug;'
         ),
-        'hydrate' => array(),
+        'hydrate' => array(
+            // Content decorators
+            'tags' => array(
+                'modelClass' => 'JotModel\Models\Tag',
+                'tableName'  => 'tagged_content',
+                'where'      => array('envelopeId' => 'envelopeId'),
+                'properties' => array('envelopeId' => 'envelopeId')
+            )
+        ),
         'joins'   => array()
     );
 
@@ -54,4 +64,10 @@ class ContentEnvelope
 
     public $version;
     public $score;
+
+
+    public function getEnvelopeId()
+    {
+        return $this->envelopeId;
+    }
 }
