@@ -43,5 +43,9 @@ class VideoRepositoryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('video', $video->type);
         $this->assertEquals('rAaHx5qsqhY', $video->sourceId);
         $this->assertEquals(1, $video->version);
+
+        // Check we have tags
+        $this->assertTrue(!empty($video->tags));
+        $this->assertNotNull($video->tags);
     }
 }
