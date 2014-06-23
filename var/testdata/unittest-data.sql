@@ -41,6 +41,11 @@ INSERT INTO `videos` VALUES (15,'tZO7Ylcn8uc','https://www.youtube.com/watch?v=t
 INSERT INTO `videos` VALUES (16,'JpBDEJXq8EQ','https://www.youtube.com/watch?v=JpBDEJXq8EQ','KinoYoga','https://gdata.youtube.com/feeds/api/users/KinoYoga','2014-05-24 06:00:06',433,19314);
 
 
+
+
+--
+-- Content Tags
+--
 INSERT INTO `tag_collections` VALUES(1, 'uncategorised', 'Uncategorised');
 INSERT INTO `tag_collections` VALUES(2, 'styles',        'Styles');
 INSERT INTO `tag_collections` VALUES(3, 'poses',         'Poses');
