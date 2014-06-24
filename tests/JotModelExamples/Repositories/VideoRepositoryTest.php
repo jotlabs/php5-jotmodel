@@ -27,6 +27,23 @@ class VideoRepositoryTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function testGetVideosReturnsArrayOfVideos()
+    {
+        $videos = $this->repo->getVideos();
+
+        //echo "Videos: ";
+        //print_r($videos);
+
+        $this->assertNotNull($videos);
+        $this->assertTrue(is_array($videos));
+        $this->assertEquals(10, count($videos));
+
+        foreach ($videos as $video) {
+            $this->assertTrue(is_a($video, 'JotModelExamples\Models\Video'));
+        }
+    }
+
+
     public function testGetBuSlugReturnsContentEnvelope()
     {
         $slug = 'the-ashtanga-primary-series';
