@@ -7,6 +7,9 @@ class Query
     protected $modelClass;
     protected $filters;
 
+    protected $rangeStart;
+    protected $rangeLength;
+
 
     public function __construct()
     {
@@ -47,5 +50,21 @@ class Query
     public function setFilters($filters)
     {
         $this->filters = $filters;
+    }
+
+
+    public function setRange($start, $length)
+    {
+        $this->rangeStart  = $start;
+        $this->rangeLength = $length;
+    }
+
+
+    public function getRange()
+    {
+        return array(
+            'start'  => $this->rangeStart,
+            'length' => $this->rangeLength
+        );
     }
 }
