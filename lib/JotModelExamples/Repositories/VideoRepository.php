@@ -14,6 +14,21 @@ class VideoRepository
     }
 
 
+    public function getVideos($start = 0, $length = 10)
+    {
+        $builder = new QueryBuilder();
+        $builder
+            ->setModelClass('JotModelExamples\Models\Video')
+            ->setQueryName('getRange')
+            ->setRange($start, $length);
+
+        $query   = $builder->build();
+        $results = $this->dataSource->find($query);
+
+        return $results;
+    }
+
+
     public function getBySlug($slug)
     {
         $builder = new QueryBuilder();
