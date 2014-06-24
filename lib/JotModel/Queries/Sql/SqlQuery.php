@@ -193,7 +193,7 @@ class SqlQuery
     {
         $limitClause = '';
 
-        if (!empty($limits)) {
+        if (!empty($limits['start']) || !empty($limits['length'])) {
             // TODO: This should be bind params.
             $start  = intval($limits['start']);
             $length = intval($limits['length']);
