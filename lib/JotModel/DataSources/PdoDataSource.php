@@ -49,7 +49,7 @@ class PdoDataSource implements DataSource
     }
 
 
-    public function find($query, $hydrate = true)
+    public function find($query, $hydrate = false)
     {
         $sqlQuery  = $this->getSqlQuery($query);
         $statement = $this->getStatement($sqlQuery);
