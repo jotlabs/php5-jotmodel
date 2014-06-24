@@ -15,7 +15,7 @@ class SqlQuery
     protected $hydrates;
 
     protected $groups;
-    protected $limit;
+    protected $limits;
 
 
     public function __construct()
@@ -93,6 +93,12 @@ class SqlQuery
     }
 
 
+    public function setLimits($limits)
+    {
+        $this->limits = $limits;
+    }
+
+
     public function setStructure($structure)
     {
         $this->queryStructure = $structure;
@@ -134,7 +140,7 @@ class SqlQuery
         $joins     = implode("\n", $this->joins);
         $filters   = $this->formatFilters($this->filters);
         $groups    = '';
-        $limit     = '';
+        $limit     = $this->formatLimits($this->limits);
 
         //$sql = "SELECT {$fieldList} FROM `{$table}` {$joins} {$filters} {$groups} {$limit}";
         //$sql = trim($sql) . ';';
@@ -180,5 +186,20 @@ class SqlQuery
         $filterString = (!empty($filters)?'WHERE ':'') . implode(' AND ', $filters);
 
         return $filterString;
+    }
+
+
+    protected function formatLimits($limits)
+    {
+        $limitClause = '';
+
+        if (!empty($limits)) {
+            // TODO: This should be bind params.
+            $start  = intval($limits['start']);
+            $length = intval($limits['length']);
+            $limitClause = "LIMIT {$start},{$length}";
+        }
+
+        return $limitClause;
     }
 }
