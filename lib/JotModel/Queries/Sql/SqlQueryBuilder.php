@@ -14,6 +14,7 @@ class SqlQueryBuilder
     protected $modelName;
     protected $queryName;
     protected $filters;
+    protected $limits;
 
     protected $sqlFields;
     protected $sqlJoins;
@@ -61,9 +62,14 @@ class SqlQueryBuilder
         $query->setQueryName("{$this->modelName}|{$this->queryName}");
         $query->setFilters($this->filters);
 
+        if (!empty($this->limits)) {
+            $query->setLimits($this->limits);
+        }
+
         $query->setFields($this->sqlFields);
         $query->setJoins($this->sqlJoins);
         $query->setHydrates($this->sqlHydrates);
+        $query->setLimits($this->limits);
 
         $queryStructure = $this->getQueryStructure();
         if ($queryStructure) {
@@ -82,6 +88,7 @@ class SqlQueryBuilder
         $this->modelClass = $this->query->getModelClass();
         $this->queryName  = $this->query->getQueryName();
         $this->filters    = $this->query->getFilters();
+        $this->limits     = $this->query->getRange();
 
         return $this;
     }
