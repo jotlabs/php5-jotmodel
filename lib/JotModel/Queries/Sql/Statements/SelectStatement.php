@@ -21,7 +21,7 @@ class SelectStatement
     }
 
 
-    public function setTable($tableName)
+    public function table($tableName)
     {
         $this->fromTable = $tableName;
         return $this;
@@ -37,7 +37,7 @@ class SelectStatement
     }
 
 
-    public function addField($field, $fieldAlias = null)
+    public function field($field, $fieldAlias = null)
     {
         $fieldSpec = $field;
         if ($fieldAlias) {
@@ -49,7 +49,7 @@ class SelectStatement
     }
 
 
-    public function addFields($fields)
+    public function fields($fields)
     {
         if (!empty($fields[0])) {
             $this->fieldList = array_merge($this->fieldList, $fields);
@@ -76,7 +76,7 @@ class SelectStatement
     }
 
 
-    public function addWhere($whereSpec)
+    public function where($whereSpec)
     {
         $this->whereSpec[] = $whereSpec;
         return $this;
