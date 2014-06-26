@@ -37,16 +37,27 @@ class SelectStatement
     }
 
 
-    public function addField($fieldSpec)
+    public function addField($field, $fieldAlias = null)
     {
+        $fieldSpec = $field;
+        if ($fieldAlias) {
+            $fieldSpec = "{$field} AS {$fieldAlias}";
+        }
+
         $this->fieldList[] = $fieldSpec;
         return $this;
     }
 
 
-    public function addFields($fieldSpecs)
+    public function addFields($fields)
     {
-        $this->fieldList = array_merge($this->fieldList, $fieldSpecs);
+        if (!empty($fields[0])) {
+            $this->fieldList = array_merge($this->fieldList, $fields);
+        } else {
+            foreach ($fields as $alias => $source) {
+                $this->fieldList[] = "{$source} AS {$alias}";
+            }
+        }
         return $this;
     }
 
