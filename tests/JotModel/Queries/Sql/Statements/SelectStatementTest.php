@@ -33,7 +33,7 @@ class SelectStatementTest extends PHPUnit_Framework_TestCase
 
     public function testTableOnlyReturnsSimpleSqlQuery()
     {
-        $this->statement->setTable('mytable');
+        $this->statement->table('mytable');
         $sql = $this->statement->toString();
         $this->assertNotNull($sql);
         $this->assertTrue(strpos($sql, 'SELECT') === 0);
@@ -45,8 +45,8 @@ class SelectStatementTest extends PHPUnit_Framework_TestCase
     public function testAddedFieldAppearsInSqlQuery()
     {
         $this->statement
-            ->setTable('mytable')
-            ->addField('myField');
+            ->table('mytable')
+            ->field('myField');
 
         $sql = $this->statement->toString();
 
@@ -61,8 +61,8 @@ class SelectStatementTest extends PHPUnit_Framework_TestCase
     public function testAddedRenamedFieldAppearsInSqlQuery()
     {
         $this->statement
-            ->setTable('mytable')
-            ->addField('myField', 'my_field');
+            ->table('mytable')
+            ->field('myField', 'my_field');
 
         $sql = $this->statement->toString();
 
@@ -77,8 +77,8 @@ class SelectStatementTest extends PHPUnit_Framework_TestCase
     public function testAddedFieldsAppearInSqlQuery()
     {
         $this->statement
-            ->setTable('mytable')
-            ->addFields(array('field1', 'field2'));
+            ->table('mytable')
+            ->fields(array('field1', 'field2'));
 
         $sql = $this->statement->toString();
 
@@ -93,8 +93,8 @@ class SelectStatementTest extends PHPUnit_Framework_TestCase
     public function testAddedRenamedFieldsAppearInSqlQuery()
     {
         $this->statement
-            ->setTable('mytable')
-            ->addFields(array(
+            ->table('mytable')
+            ->fields(array(
                 'f1' => 'a.f1',
                 'f2' => 'b.f2'
             ));
