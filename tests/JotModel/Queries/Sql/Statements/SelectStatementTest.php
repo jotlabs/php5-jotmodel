@@ -40,4 +40,20 @@ class SelectStatementTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(strpos($sql, 'FROM `mytable`') !== -1);
         $this->assertTrue(preg_match('/^SELECT\s+\*\s+FROM\s+`mytable`;$/', $sql) === 1);
     }
+
+
+    public function testAddedFieldAppearsInSqlQuery()
+    {
+        $this->statement
+            ->setTable('mytable')
+            ->addField('myField');
+
+        $sql = $this->statement->toString();
+
+        $this->assertNotNull($sql);
+        $this->assertTrue(strpos($sql, 'SELECT') === 0);
+        $this->assertTrue(strpos($sql, 'FROM `mytable`') !== -1);
+        $this->assertTrue(preg_match('/^SELECT\s+myField\s+FROM\s+`mytable`;$/', $sql) === 1);
+
+    }
 }
