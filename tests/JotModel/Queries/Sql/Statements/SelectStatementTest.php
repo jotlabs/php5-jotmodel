@@ -56,4 +56,56 @@ class SelectStatementTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(preg_match('/^SELECT\s+myField\s+FROM\s+`mytable`;$/', $sql) === 1);
 
     }
+
+
+    public function testAddedRenamedFieldAppearsInSqlQuery()
+    {
+        $this->statement
+            ->setTable('mytable')
+            ->addField('myField', 'my_field');
+
+        $sql = $this->statement->toString();
+
+        $this->assertNotNull($sql);
+        $this->assertTrue(strpos($sql, 'SELECT') === 0);
+        $this->assertTrue(strpos($sql, 'FROM `mytable`') !== -1);
+        $this->assertTrue(preg_match('/^SELECT\s+myField\s+AS\s+my_field\s+FROM\s+`mytable`;$/', $sql) === 1);
+
+    }
+
+
+    public function testAddedFieldsAppearInSqlQuery()
+    {
+        $this->statement
+            ->setTable('mytable')
+            ->addFields(array('field1', 'field2'));
+
+        $sql = $this->statement->toString();
+
+        $this->assertNotNull($sql);
+        $this->assertTrue(strpos($sql, 'SELECT') === 0);
+        $this->assertTrue(strpos($sql, 'FROM `mytable`') !== -1);
+        $this->assertTrue(preg_match('/^SELECT\s+field1,\s+field2\s+FROM\s+`mytable`;$/', $sql) === 1);
+
+    }
+
+
+    public function testAddedRenamedFieldsAppearInSqlQuery()
+    {
+        $this->statement
+            ->setTable('mytable')
+            ->addFields(array(
+                'f1' => 'a.f1',
+                'f2' => 'b.f2'
+            ));
+
+        $sql = $this->statement->toString();
+        //echo "SQL: {$sql}\n";
+
+        $this->assertNotNull($sql);
+        $this->assertTrue(strpos($sql, 'SELECT') === 0);
+        $this->assertTrue(strpos($sql, 'FROM `mytable`') !== -1);
+        $this->assertTrue(preg_match('/^SELECT\s+a\.f1 AS f1,\s+b\.f2 AS f2\s+FROM\s+`mytable`;$/', $sql) === 1);
+
+    }
 }
