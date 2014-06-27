@@ -44,6 +44,6 @@ class SqlQueryBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($sql);
         $this->assertTrue(strpos($sql, 'SELECT ') === 0);
         $this->assertTrue(preg_match('/FROM `content_envelope`/', $sql) == 1);
-        $this->assertTrue(preg_match('/WHERE slug=:slug/', $sql) == 1);
+        $this->assertTrue(preg_match('/WHERE slug = :slug/', $sql) == 1);
     }
 }
