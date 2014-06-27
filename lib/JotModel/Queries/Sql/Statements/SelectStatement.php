@@ -10,6 +10,7 @@ class SelectStatement
     protected $joinClauses;
     protected $whereClauses;
     protected $limits;
+    protected $tokens;
 
 
     public function __construct()
@@ -18,6 +19,7 @@ class SelectStatement
         $this->fromTable    = '';
         $this->joins        = array();
         $this->whereClauses = array();
+        $this->tokens       = array();
     }
 
 
@@ -89,6 +91,23 @@ class SelectStatement
         return $this;
     }
 
+
+    public function getTokens()
+    {
+        return $this->tokens;
+    }
+
+
+    protected function extractTokens($tokenString)
+    {
+        if (preg_match('/(\:\w+)/', $tokenString, $matches)) {
+            foreach ($matches as $tokenMatch) {
+                if (!in_array($tokenMatch, $this->tokens)) {
+                    $this->tokens[] = $tokenMatch;
+                }
+            }
+        }
+    }
 
 
     public function toString()
