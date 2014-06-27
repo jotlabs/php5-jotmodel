@@ -164,13 +164,13 @@ class SelectStatement
 
     protected function formatFieldList($fieldList)
     {
-        $fieldList = '*';
+        $formattedFields = '*';
 
-        if ($this->fieldList) {
-            $fieldList = implode(",\n\t", $this->fieldList);
+        if ($fieldList) {
+            $formattedFields = implode(",\n\t", $this->fieldList);
         }
 
-        return "\t{$fieldList}";
+        return "\t{$formattedFields}";
     }
 
 
