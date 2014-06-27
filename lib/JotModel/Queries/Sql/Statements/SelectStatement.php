@@ -101,8 +101,8 @@ class SelectStatement
 
     protected function extractTokens($tokenString)
     {
-        if (preg_match('/(\:\w+)/', $tokenString, $matches)) {
-            foreach ($matches as $tokenMatch) {
+        if (preg_match_all('/(\:\w+)/', $tokenString, $matches)) {
+            foreach ($matches[1] as $tokenMatch) {
                 if (!in_array($tokenMatch, $this->tokens)) {
                     $this->tokens[] = $tokenMatch;
                 }
