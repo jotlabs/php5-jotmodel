@@ -43,6 +43,7 @@ class SqlQueryBuilder
         $this->processSqlModelName($this->modelClass);
         $this->processSqlFields($this->modelClass);
         $this->processSqlJoins($this->modelClass);
+        $this->processSqlFilters($this->modelClass);
         $this->processSqlHydrates($this->modelClass);
         $this->processContentEnvelope($this->modelClass);
 
@@ -192,15 +193,24 @@ class SqlQueryBuilder
     }
 
 
+    protected function processSqlFilters($modelClass)
+    {
+        // TODO: Replace this hacky with something schema based
+        if (array_key_exists('tag', $this->filters)) {
+            $join = 'INNER JOIN `tagged_content` AS `tc` ON tc.envelopeId = ce.envelopeId';
+            $this->sqlJoins[] = $join;
+        }
+    }
+
+
     protected function processContentEnvelope($modelClass)
     {
         if (is_subclass_of($modelClass, self::CONTENT_ENVELOPE_CLASS)) {
             $envelopeClass = self::CONTENT_ENVELOPE_CLASS;
 
             // Add content envelope join
-            $this->sqlJoins[] = "LEFT JOIN `content_envelope` AS `ce` "
-                                . "ON  ce.model = 'video' "
-                                . "AND {$this->tableName}.id = ce.contentId";
+            $this->sqlJoins[] = "INNER JOIN `content_envelope` AS `ce` ON "
+                                . "(ce.model = 'video' AND {$this->tableName}.id = ce.contentId)";
 
             // Add content_envelope fields
             $envelopeFields = $envelopeClass::$SQL_FIELDS;
