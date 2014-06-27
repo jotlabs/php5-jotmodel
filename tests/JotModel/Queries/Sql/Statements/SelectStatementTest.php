@@ -104,8 +104,61 @@ class SelectStatementTest extends PHPUnit_Framework_TestCase
 
         $this->assertNotNull($sql);
         $this->assertTrue(strpos($sql, 'SELECT') === 0);
-        $this->assertTrue(strpos($sql, 'FROM `mytable`') !== -1);
+        $this->assertTrue(strpos($sql, 'FROM `mytable`') !== false);
         $this->assertTrue(preg_match('/^SELECT\s+a\.f1 AS f1,\s+b\.f2 AS f2\s+FROM\s+`mytable`;$/', $sql) === 1);
 
+    }
+
+
+    public function testAddingWhereClauseAppearsinSqlQuery()
+    {
+        $this->statement
+            ->fields(array('f1', 'f2'))
+            ->table('t')
+            ->where('f1 = :token');
+
+        $sql = $this->statement->toString();
+        //echo "SQL: {$sql}\n";
+
+        $this->assertNotNull($sql);
+        $this->assertTrue(strpos($sql, 'SELECT') === 0);
+        $this->assertTrue(strpos($sql, 'FROM `t`') !== false);
+        $this->assertTrue(strpos($sql, 'WHERE') !== false);
+        $this->assertTrue(strpos($sql, 'f1 = :token') !== false);
+        $this->assertTrue(preg_match('/FROM `t`\s+WHERE\s+f1 = :token;$/', $sql) === 1);
+    }
+
+
+    public function testAddingMultipleWhereClauseAppearsinSqlQuery()
+    {
+        $this->statement
+            ->fields(array('f1', 'f2'))
+            ->table('t')
+            ->where('f1 = :t1')
+            ->where('f2 = :t2');
+
+        $sql = $this->statement->toString();
+        //echo "SQL: {$sql}\n";
+
+        $this->assertNotNull($sql);
+        $this->assertTrue(strpos($sql, 'SELECT') === 0);
+        $this->assertTrue(strpos($sql, 'FROM `t`') !== false);
+        $this->assertTrue(strpos($sql, 'WHERE') !== false);
+        $this->assertTrue(strpos($sql, 'f1 = :t1') !== false);
+        $this->assertTrue(strpos($sql, 'f2 = :t2') !== false);
+        $this->assertTrue(preg_match('/FROM `t`\s+WHERE\s+f1 = :t1\s+AND\s+f2 = :t2;$/', $sql) === 1);
+    }
+
+
+    public function testAddWhereWithTokenListsTokens()
+    {
+        $this->statement
+            ->fields(array('f1', 'f2'))
+            ->table('t')
+            ->where('f1 = :token');
+
+        $tokens = $this->statement->getTokens();
+        $this->assertNotNull($tokens);
+        $this->assertTrue(in_array(':token', $tokens));
     }
 }
