@@ -29,6 +29,23 @@ class VideoRepository
     }
 
 
+    public function getVideosByTag($tag)
+    {
+        $builder = new QueryBuilder();
+        $builder
+            ->setModelClass('JotModelExamples\Models\Video')
+            ->setQueryName('getByTag')
+            ->filter('tag', $tag);
+
+        $query   = $builder->build();
+        $results = $this->dataSource->find($query);
+
+        return $results;
+    }
+
+
+
+
     public function getBySlug($slug)
     {
         $builder = new QueryBuilder();

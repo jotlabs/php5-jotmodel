@@ -71,4 +71,20 @@ class VideoRepositoryTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($tag);
         $this->assertTrue(is_a($tag, 'JotModel\Models\Tag'));
     }
+
+
+    public function testGetVideosByTagReturnsArrayOfVideos()
+    {
+        $videos = $this->repo->getVideosByTag('kino-macgregor');
+
+        //print_r($videos);
+
+        $this->assertNotNull($videos);
+        $this->assertTrue(is_array($videos));
+        $this->assertEquals(3, count($videos));
+
+        foreach ($videos as $video) {
+            $this->assertTrue(is_a($video, 'JotModelExamples\Models\Video'));
+        }
+    }
 }
