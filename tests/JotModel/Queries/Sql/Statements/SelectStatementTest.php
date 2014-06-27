@@ -159,6 +159,23 @@ class SelectStatementTest extends PHPUnit_Framework_TestCase
 
         $tokens = $this->statement->getTokens();
         $this->assertNotNull($tokens);
+        $this->assertEquals(1, count($tokens));
         $this->assertTrue(in_array(':token', $tokens));
+    }
+
+
+    public function testAddMultipleWhereWithTokenListsTokens()
+    {
+        $this->statement
+            ->fields(array('f1', 'f2'))
+            ->table('t')
+            ->where('f1 = :token1')
+            ->where('f2 = :token2');
+
+        $tokens = $this->statement->getTokens();
+        $this->assertNotNull($tokens);
+        $this->assertEquals(2, count($tokens));
+        $this->assertTrue(in_array(':token1', $tokens));
+        $this->assertTrue(in_array(':token2', $tokens));
     }
 }
