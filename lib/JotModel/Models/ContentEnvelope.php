@@ -10,7 +10,8 @@ class ContentEnvelope
 
     public static $SQL_FRAGMENTS = array(
         'queries' => array(
-            'getBySlug' => 'SELECT {fieldList} FROM `content_envelope` WHERE slug=:slug;'
+            'getBySlug' => 'SELECT {fieldList} FROM `content_envelope` AS `ce` WHERE slug = :slug;',
+            'getByTag'  => 'SELECT {fieldList} FROM `content_envelope` AS `ce` WHERE tag = :tag;'
         ),
         'hydrate' => array(
             // Content decorators
@@ -25,22 +26,22 @@ class ContentEnvelope
     );
 
     public static $SQL_FIELDS = array(
-        'envelopeId'    => 'envelopeId',
-        'contentId'     => 'contentId',
-        'status'        => 'status',
-        'type'          => 'type',
-        'model'         => 'model',
-        'slug'          => 'slug',
-        'title'         => 'title',
-        'excerpt'       => 'excerpt',
-        'extra1'        => 'extra1',
-        'extra2'        => 'extra2',
-        'permalink'     => 'permalink',
-        'imageTemplate' => 'imageTemplate',
-        'dateAdded'     => 'dateAdded',
-        'dateUpdated'   => 'dateUpdated',
-        'version'       => 'version',
-        'score'         => 'score'
+        'envelopeId'    => 'ce.envelopeId',
+        'contentId'     => 'ce.contentId',
+        'status'        => 'ce.status',
+        'type'          => 'ce.type',
+        'model'         => 'ce.model',
+        'slug'          => 'ce.slug',
+        'title'         => 'ce.title',
+        'excerpt'       => 'ce.excerpt',
+        'extra1'        => 'ce.extra1',
+        'extra2'        => 'ce.extra2',
+        'permalink'     => 'ce.permalink',
+        'imageTemplate' => 'ce.imageTemplate',
+        'dateAdded'     => 'ce.dateAdded',
+        'dateUpdated'   => 'ce.dateUpdated',
+        'version'       => 'ce.version',
+        'score'         => 'ce.score'
     );
 
 
