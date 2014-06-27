@@ -80,7 +80,8 @@ class SelectStatement
 
     public function where($whereSpec)
     {
-        $this->whereSpec[] = $whereSpec;
+        $this->whereClauses[] = $whereSpec;
+        $this->extractTokens($whereSpec);
         return $this;
     }
 
@@ -181,7 +182,13 @@ class SelectStatement
 
     protected function formatWheres($whereClauses)
     {
-        return '';
+        $clause = '';
+
+        if ($whereClauses) {
+            $clause = "WHERE\n\t" . implode("\nAND\t", $whereClauses);
+        }
+
+        return $clause;
     }
 
 
