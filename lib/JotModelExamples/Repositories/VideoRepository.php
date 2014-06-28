@@ -20,7 +20,8 @@ class VideoRepository
         $builder
             ->setModelClass('JotModelExamples\Models\Video')
             ->setQueryName('getRange')
-            ->setRange($start, $length);
+            ->setRange($start, $length)
+            ->setSort('score', false);
 
         $query   = $builder->build();
         $results = $this->dataSource->find($query);
