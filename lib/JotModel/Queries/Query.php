@@ -9,6 +9,7 @@ class Query
 
     protected $rangeStart;
     protected $rangeLength;
+    protected $sortOrder;
 
 
     public function __construct()
@@ -66,5 +67,17 @@ class Query
             'start'  => $this->rangeStart,
             'length' => $this->rangeLength
         );
+    }
+
+
+    public function setSortOrder($sortOrder)
+    {
+        $this->sortOrder = $sortOrder;
+    }
+
+
+    public function getSortOrder()
+    {
+        return $this->sortOrder;
     }
 }
