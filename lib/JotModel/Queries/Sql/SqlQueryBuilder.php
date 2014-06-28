@@ -30,6 +30,7 @@ class SqlQueryBuilder
         $this->tableName = '';
         $this->models    = array();
         $this->filters   = array();
+        $this->sortOrder = array();
 
         $this->sqlFields   = array();
         $this->sqlJoins    = array();
@@ -67,6 +68,10 @@ class SqlQueryBuilder
             $query->setLimits($this->limits);
         }
 
+        if (!empty($this->sortOrder)) {
+            $query->setSort($this->sortOrder);
+        }
+
         $query->setFields($this->sqlFields);
         $query->setJoins($this->sqlJoins);
         $query->setHydrates($this->sqlHydrates);
@@ -90,6 +95,7 @@ class SqlQueryBuilder
         $this->queryName  = $this->query->getQueryName();
         $this->filters    = $this->query->getFilters();
         $this->limits     = $this->query->getRange();
+        $this->sortOrder  = $this->query->getSortOrder();
 
         return $this;
     }
@@ -146,6 +152,12 @@ class SqlQueryBuilder
     public function setFilters($filters)
     {
         $this->filters = array_merge($this->filters, $filters);
+    }
+
+
+    public function setSortOrder($sortOrder)
+    {
+        $this->sortOrder = $sortOrder;
     }
 
 
