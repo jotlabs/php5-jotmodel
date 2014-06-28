@@ -11,6 +11,7 @@ class QueryBuilder
 
     protected $rangeStart;
     protected $rangeLength;
+    protected $sortOrder = array();
 
 
     public function build()
@@ -19,6 +20,7 @@ class QueryBuilder
         $query->setModelClass($this->modelClass);
         $query->setQueryName($this->queryName);
         $query->setFilters($this->filters);
+        $query->setSortOrder($this->sortOrder);
 
         if ($this->rangeStart || $this->rangeLength) {
             $query->setRange($this->rangeStart, $this->rangeLength);
@@ -53,6 +55,17 @@ class QueryBuilder
     {
         $this->rangeStart  = intval($start);
         $this->rangeLength = intval($length);
+        return $this;
+    }
+
+
+    public function setSort($field, $inAscending = true)
+    {
+        $sort = (object) array(
+            'field'       => $field,
+            'inAscending' => $inAscending
+        );
+        $this->sortOrder[] = $sort;
         return $this;
     }
 }
