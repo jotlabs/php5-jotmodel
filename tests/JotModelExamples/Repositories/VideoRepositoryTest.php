@@ -38,8 +38,16 @@ class VideoRepositoryTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($videos));
         $this->assertEquals(10, count($videos));
 
+        $lastScore = false;
         foreach ($videos as $video) {
             $this->assertTrue(is_a($video, 'JotModelExamples\Models\Video'));
+
+            // Test the score order is descending
+            if ($lastScore !== false) {
+                $this->assertTrue($lastScore >= $video->score);
+            }
+
+            $lastScore = $video->score;
         }
     }
 
