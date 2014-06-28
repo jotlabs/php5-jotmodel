@@ -16,6 +16,7 @@ class SqlQuery
 
     protected $groups;
     protected $limits;
+    protected $sort;
 
 
     public function __construct()
@@ -24,6 +25,7 @@ class SqlQuery
         $this->joins    = array();
         $this->filters  = array();
         $this->hydrates = array();
+        $this->sort     = array();
     }
 
 
@@ -99,6 +101,12 @@ class SqlQuery
     }
 
 
+    public function setSort($sort)
+    {
+        $this->sort = $sort;
+    }
+
+
     public function setStructure($structure)
     {
         $this->queryStructure = $structure;
@@ -141,6 +149,7 @@ class SqlQuery
         $filters   = $this->formatFilters($this->filters);
         $groups    = '';
         $limit     = $this->formatLimits($this->limits);
+        $sort      = $this->formatSort($this->sort);
 
         //$sql = "SELECT {$fieldList} FROM `{$table}` {$joins} {$filters} {$groups} {$limit}";
         //$sql = trim($sql) . ';';
@@ -157,6 +166,10 @@ class SqlQuery
 
         if ($filters) {
             $sqlBuffer[] = $filters;
+        }
+
+        if ($sort) {
+            $sqlBuffer[] = $sort;
         }
 
         if ($groups) {
@@ -183,9 +196,23 @@ class SqlQuery
             $filters[] = "{$sqlField} = :{$bindField}";
         }
 
-        $filterString = (!empty($filters)?'WHERE ':'') . implode(' AND ', $filters);
+        $filterString = (!empty($filters)? 'WHERE ' . implode(' AND ', $filters) : '');
 
         return $filterString;
+    }
+
+
+    protected function formatSort($sortOrder)
+    {
+        $clauses = array();
+
+        foreach ($sortOrder as $sort) {
+            $order = ($sort->inAscending ? 'ASC' : 'DESC');
+            $clauses[] = "{$sort->field} {$order}";
+        }
+
+        $sortString = (!empty($clauses)? 'ORDER BY ' . implode(', ', $clauses) : '');
+        return $sortString;
     }
 
 
