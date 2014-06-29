@@ -12,13 +12,14 @@ class Category
     );
 
     public static $SQL_FIELDS = array(
-        'categoryid'     => '',
-        'category'       => '',
-        'name'           => '',
-        'collectionId'   => '',
-        'collectionSlug' => '',
-        'collectionName' => '',
-        'dateAdded'      => '',
+        'categoryid'       => '',
+        'category'         => '',
+        'name'             => '',
+        'collectionId'     => '',
+        'collectionSlug'   => '',
+        'collectionName'   => '',
+        'collectionWeight' => '',
+        'dateAdded'        => '',
     );
 
     protected $envelopeId;
@@ -29,6 +30,7 @@ class Category
     protected $collectionId;
     public $collectionSlug;
     public $collectionName;
+    public $collectionWeight;
 
     public $dateAdded;
 }
