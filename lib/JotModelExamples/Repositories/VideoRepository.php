@@ -45,6 +45,19 @@ class VideoRepository
     }
 
 
+    public function getVideosByCategory($category)
+    {
+        $builder = new QueryBuilder();
+        $builder
+            ->setModelClass('JotModelExamples\Models\Video')
+            ->setQueryName('getByCategory')
+            ->filter('category', $category);
+
+        $query   = $builder->build();
+        $results = $this->dataSource->find($query);
+
+        return $results;
+    }
 
 
     public function getBySlug($slug)
