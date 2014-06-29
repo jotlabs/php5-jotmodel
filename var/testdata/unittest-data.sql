@@ -76,3 +76,32 @@ INSERT INTO `content_tags` VALUES(14, 1, '2014-06-01');
 INSERT INTO `content_tags` VALUES(15, 1, '2014-06-01');
 INSERT INTO `content_tags` VALUES(16, 1, '2014-06-01');
 INSERT INTO `content_tags` VALUES(16, 2, '2014-06-01');
+
+
+--
+-- Content Categories
+--
+
+INSERT INTO `category_collections` VALUES(1, 'uncategorised', 'Uncategorised');
+
+INSERT INTO `categories` VALUES(1, 1, 'ashtanga', 'Ashtanga');
+
+INSERT INTO `content_categories` VALUES(1, 1, '2014-06-01');
+INSERT INTO `content_categories` VALUES(2, 1, '2014-06-01');
+INSERT INTO `content_categories` VALUES(3, 1, '2014-06-01');
+INSERT INTO `content_categories` VALUES(4, 1, '2014-06-01');
+INSERT INTO `content_categories` VALUES(5, 1, '2014-06-01');
+INSERT INTO `content_categories` VALUES(6, 1, '2014-06-01');
+INSERT INTO `content_categories` VALUES(7, 1, '2014-06-01');
+INSERT INTO `content_categories` VALUES(8, 1, '2014-06-01');
+INSERT INTO `content_categories` VALUES(9, 1, '2014-06-01');
+INSERT INTO `content_categories` VALUES(10, 1, '2014-06-01');
+INSERT INTO `content_categories` VALUES(11, 1, '2014-06-01');
+INSERT INTO `content_categories` VALUES(12, 1, '2014-06-01');
+INSERT INTO `content_categories` VALUES(13, 1, '2014-06-01');
+INSERT INTO `content_categories` VALUES(14, 1, '2014-06-01');
+INSERT INTO `content_categories` VALUES(15, 1, '2014-06-01');
+INSERT INTO `content_categories` VALUES(16, 1, '2014-06-01');
+
+
+
