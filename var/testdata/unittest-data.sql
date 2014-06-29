@@ -82,7 +82,7 @@ INSERT INTO `content_tags` VALUES(16, 2, '2014-06-01');
 -- Content Categories
 --
 
-INSERT INTO `category_collections` VALUES(1, 'uncategorised', 'Uncategorised');
+INSERT INTO `category_collections` VALUES(1, 'uncategorised', 'Uncategorised', 0);
 
 INSERT INTO `categories` VALUES(1, 1, 'ashtanga', 'Ashtanga');
 

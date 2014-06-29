@@ -184,7 +184,8 @@ LEFT JOIN `tag_collections` ON `tags`.collectionId = `tag_collections`.id;
 CREATE TABLE IF NOT EXISTS `category_collections` (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
     slug            VARCHAR(31) UNIQUE,
-    name            VARCHAR(31)
+    name            VARCHAR(31),
+    weight          INTEGER
 );
 
 
@@ -223,6 +224,7 @@ SELECT
     categories.collectionId         AS collectionId,
     category_collections.slug       AS collectionSlug,
     category_collections.name       AS collectionName,
+    category_collections.weight     AS collectionWeight,
     content_categories.dateAdded    AS dateAdded
 FROM `content_categories`
 LEFT JOIN `categories` ON `content_categories`.categoryId = `categories`.id
