@@ -78,6 +78,17 @@ class VideoRepositoryTest extends PHPUnit_Framework_TestCase
         $tag = $video->tags[0];
         $this->assertNotNull($tag);
         $this->assertTrue(is_a($tag, 'JotModel\Models\Tag'));
+
+
+        // Check we have categories
+        $this->assertTrue(!empty($video->categories));
+        $this->assertNotNull($video->categories);
+
+        $this->assertTrue(is_array($video->categories));
+        $this->assertEquals(1, count($video->categories));
+        $category = $video->categories[0];
+        $this->assertNotNull($category);
+        $this->assertTrue(is_a($category, 'JotModel\Models\Category'));
     }
 
 
@@ -90,6 +101,22 @@ class VideoRepositoryTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($videos);
         $this->assertTrue(is_array($videos));
         $this->assertEquals(3, count($videos));
+
+        foreach ($videos as $video) {
+            $this->assertTrue(is_a($video, 'JotModelExamples\Models\Video'));
+        }
+    }
+
+
+    public function testGetVideosByCategoryReturnsArrayOfVideos()
+    {
+        $videos = $this->repo->getVideosByCategory('ashtanga');
+
+        //print_r($videos);
+
+        $this->assertNotNull($videos);
+        $this->assertTrue(is_array($videos));
+        $this->assertEquals(16, count($videos));
 
         foreach ($videos as $video) {
             $this->assertTrue(is_a($video, 'JotModelExamples\Models\Video'));
