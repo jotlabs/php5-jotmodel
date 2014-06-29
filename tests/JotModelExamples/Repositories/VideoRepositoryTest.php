@@ -89,7 +89,7 @@ class VideoRepositoryTest extends PHPUnit_Framework_TestCase
         $category = $video->categories[0];
         $this->assertNotNull($category);
         $this->assertTrue(is_a($category, 'JotModel\Models\Category'));
-        $this->assertNotNull(property_exists($category, 'collectionWeight'));
+        $this->assertNotNull($category->collectionWeight);
     }
 
 
