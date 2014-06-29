@@ -212,6 +212,11 @@ class SqlQueryBuilder
             $join = 'INNER JOIN `tagged_content` AS `tc` ON tc.envelopeId = ce.envelopeId';
             $this->sqlJoins[] = $join;
         }
+
+        if (array_key_exists('category', $this->filters)) {
+            $join = 'INNER JOIN `category_content` AS `cc` ON cc.envelopeId = ce.envelopeId';
+            $this->sqlJoins[] = $join;
+        }
     }
 
 
