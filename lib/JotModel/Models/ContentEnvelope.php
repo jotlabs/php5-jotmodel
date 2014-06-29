@@ -6,7 +6,7 @@ class ContentEnvelope
     # TODO: Abstract these static properties into a schema class or config object
     public static $MODEL = 'content';
 
-    public static $DECORATORS = array('tags');
+    public static $DECORATORS = array('tags', 'categories');
 
     public static $SQL_FRAGMENTS = array(
         'queries' => array(
@@ -18,6 +18,12 @@ class ContentEnvelope
             'tags' => array(
                 'modelClass' => 'JotModel\Models\Tag',
                 'tableName'  => 'tagged_content',
+                'where'      => array('envelopeId' => 'envelopeId'),
+                'properties' => array('envelopeId' => 'envelopeId')
+            ),
+            'categories' => array(
+                'modelClass' => 'JotModel\Models\Category',
+                'tableName'  => 'category_content',
                 'where'      => array('envelopeId' => 'envelopeId'),
                 'properties' => array('envelopeId' => 'envelopeId')
             )
