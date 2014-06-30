@@ -52,6 +52,25 @@ class VideoRepositoryTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function testGetVideosPageTwoReturnsPageTwoVideos()
+    {
+        $videos = $this->repo->getVideos(10, 10);
+        $this->assertNotNull($videos);
+        $this->assertTrue(is_array($videos));
+        $this->assertEquals(6, count($videos));
+    }
+
+
+    public function testCallingGetVideosForTwoDifferentPagesReturnsEachPage()
+    {
+        $videos1 = $this->repo->getVideos();
+        $videos2 = $this->repo->getVideos(10, 10);
+
+        $this->assertEquals(10, count($videos1));
+        $this->assertEquals(6, count($videos2));
+    }
+
+
     public function testGetBuSlugReturnsContentEnvelope()
     {
         $slug = 'the-ashtanga-primary-series';
