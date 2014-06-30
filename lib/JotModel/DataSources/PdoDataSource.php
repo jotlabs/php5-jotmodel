@@ -139,10 +139,28 @@ class PdoDataSource implements DataSource
 
     protected function getParameters($query)
     {
-        $params = null;
+        $params = $this->applyPaginationParams($query);
 
         foreach ($query->getFilters() as $field => $value) {
             $params[":{$field}"] = $value;
+        }
+
+        return $params;
+    }
+
+
+    protected function applyPaginationParams($query)
+    {
+        $params = array();
+
+        // Check for pagination ranges
+        $range = $query->getRange();
+        if (array_key_exists('start', $range) && is_integer($range['start'])) {
+            $params[":pageOffset"] = intval($range['start']);
+        }
+
+        if (array_key_exists('length', $range) && is_integer($range['length'])) {
+            $params[":pageLength"] = intval($range['length']);
         }
 
         return $params;
