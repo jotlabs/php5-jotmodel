@@ -126,8 +126,13 @@ class PdoDataSource implements DataSource
 
     protected function runQuery($statement, $params)
     {
+        $results = array();
         $statement->execute($params);
-        $results = $statement->fetchAll();
+
+        if (!$this->isPdoError($statement)) {
+            $results = $statement->fetchAll();
+        }
+
         return $results;
     }
 
