@@ -18,6 +18,8 @@ class SqlQuery
     protected $limits;
     protected $sort;
 
+    protected $paramList;
+
 
     public function __construct()
     {
@@ -26,6 +28,8 @@ class SqlQuery
         $this->filters  = array();
         $this->hydrates = array();
         $this->sort     = array();
+
+        $this->paramList = array();
     }
 
 
@@ -221,10 +225,13 @@ class SqlQuery
         $limitClause = '';
 
         if (!empty($limits['start']) || !empty($limits['length'])) {
-            // TODO: This should be bind params.
-            $start  = intval($limits['start']);
-            $length = intval($limits['length']);
-            $limitClause = "LIMIT {$start},{$length}";
+            //$start  = intval($limits['start']);
+            //$length = intval($limits['length']);
+            //$limitClause = "LIMIT {$start},{$length}";
+            $limitClause = "LIMIT :pageOffset, :pageLength";
+
+            $this->paramList[] = ':pageOffset';
+            $this->paramList[] = ':pageLength';
         }
 
         return $limitClause;
