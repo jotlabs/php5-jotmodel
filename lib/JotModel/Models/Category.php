@@ -12,6 +12,7 @@ class Category
     );
 
     public static $SQL_FIELDS = array(
+        'envelopeId'       => '',
         'categoryid'       => '',
         'category'         => '',
         'name'             => '',

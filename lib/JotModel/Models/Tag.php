@@ -12,6 +12,7 @@ class Tag
     );
 
     public static $SQL_FIELDS = array(
+        'envelopeId'     => '',
         'tagId'          => '',
         'tag'            => '',
         'name'           => '',
