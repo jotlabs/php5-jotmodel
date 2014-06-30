@@ -56,7 +56,7 @@ class PdoDataSource implements DataSource
         $params    = $this->getParameters($query);
         $results   = $this->runQuery($statement, $params);
 
-        if ($hydrate && $sqlQuery->hasHydrates()) {
+        if ($results && $hydrate && $sqlQuery->hasHydrates()) {
             //echo "Need to hydrate!\n";
             $results = $this->hydrateResults($results, $sqlQuery);
         }
