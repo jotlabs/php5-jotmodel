@@ -83,6 +83,9 @@ class DataSourceFactory
                 $pdoConnection = new PDO($config->dsn);
             }
 
+            // Allow MySQL to use LIMIT placeholder parameters in prepared statements
+            $pdoConnection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
             $dataSource = new PdoDataSource($pdoConnection);
             $dataSource->setSchema($this->schema);
         }
