@@ -44,9 +44,9 @@ class SqlQueryBuilder
         $this->processSqlModelName($this->modelClass);
         $this->processSqlFields($this->modelClass);
         $this->processSqlJoins($this->modelClass);
-        $this->processSqlFilters($this->modelClass);
         $this->processSqlHydrates($this->modelClass);
         $this->processContentEnvelope($this->modelClass);
+        $this->processSqlFilters($this->modelClass);
 
         $query = null;
 
