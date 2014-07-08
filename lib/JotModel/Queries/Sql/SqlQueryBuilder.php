@@ -224,10 +224,11 @@ class SqlQueryBuilder
     {
         if (is_subclass_of($modelClass, self::CONTENT_ENVELOPE_CLASS)) {
             $envelopeClass = self::CONTENT_ENVELOPE_CLASS;
+            $modelType     = $modelClass::$MODEL_TYPE;
 
             // Add content envelope join
             $this->sqlJoins[] = "INNER JOIN `content_envelope` AS `ce` ON "
-                                . "(ce.model = 'video' AND {$this->tableName}.id = ce.contentId)";
+                                . "(ce.model = '{$modelType}' AND {$this->tableName}.id = ce.contentId)";
 
             // Add content_envelope fields
             $envelopeFields = $envelopeClass::$SQL_FIELDS;
