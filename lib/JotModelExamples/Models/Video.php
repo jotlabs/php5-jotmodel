@@ -7,6 +7,7 @@ class Video extends ContentEnvelope
 {
     # TODO: Abstract these static properties into a schema class or config object
     public static $MODEL = 'videos';
+    public static $MODEL_TYPE = 'video';
 
     public static $SQL_FRAGMENTS = array(
         'queries' => array(
