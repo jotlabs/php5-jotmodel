@@ -227,7 +227,8 @@ class SqlQueryBuilder
             $modelType     = $modelClass::$MODEL_TYPE;
 
             // Add content envelope join
-            $this->sqlJoins[] = "INNER JOIN `content_envelope` AS `ce` ON "
+            // LEFT JOIN for the circumstances when the video exists but not the envelope
+            $this->sqlJoins[] = "LEFT JOIN `content_envelope` AS `ce` ON "
                                 . "(ce.model = '{$modelType}' AND {$this->tableName}.id = ce.contentId)";
 
             // Add content_envelope fields
