@@ -9,6 +9,7 @@ class Video extends ContentEnvelope
     public static $MODEL = 'videos';
     public static $MODEL_TYPE = 'video';
 
+    public static $SQL_SAVER = 'JotModelExamples\SqlSaver\VideoSqlSaver';
     public static $SQL_FRAGMENTS = array(
         'queries' => array(
             'getBySlug' => 'SELECT {fieldList} FROM `videos` {joins} WHERE slug=:slug;'
