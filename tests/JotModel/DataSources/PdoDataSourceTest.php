@@ -2,6 +2,7 @@
 namespace JotModel\DataSources;
 
 use JotModel\Queries\QueryBuilder;
+use JotModelExamples\Models\Video;
 use PHPUnit_Framework_TestCase;
 use PDO;
 
@@ -29,7 +30,7 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
 
     /**
      * @expectedException JotModel\Exceptions\JotModelException
-     */
+     **/
     public function testCreateWithoutPdoThrowsException()
     {
         $db = (object) null;
@@ -81,6 +82,28 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function testSaveModelSaves()
+    {
+        $video    = $this->createVideoModel();
+        $response = $this->dataSource->save($video);
+
+        $this->assertTrue($response);
+
+        // Check the video exists
+        $slug     = $video->slug;
+        $builder  = new QueryBuilder();
+        $builder
+            ->setModelClass('JotModelExamples\Models\Video')
+            ->setQueryName('getBySlug')
+            ->filter('slug', $slug);
+
+        $query    = $builder->build();
+        $newVideo = $this->dataSource->findOne($query);
+
+        $this->assertNotNull($newVideo);
+    }
+
+
     protected function createDb()
     {
         $db = new PDO(self::$dsn);
@@ -92,5 +115,41 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
         $db->exec($sql);
 
         return $db;
+    }
+
+
+    protected function createVideoModel()
+    {
+        $video = new Video();
+
+        // Standard envelope
+        $video->slug    = 'unit-test-fixture';
+        $video->title   = 'Unit test Fixture';
+        $video->excerpt = 'This is an excerpt of a unit test fixture';
+
+        $video->permalink     = 'http://example.com/unit/test.fixture';
+        $video->imageTemplate = 'IMAGE';
+
+        //$video->status;
+        //$video->model;
+        //$video->extra1;
+        //$video->extra2;
+        //$video->dateAdded;
+        //$video->dateUpdated;
+        //$video->version;
+        //$video->score;
+
+        // Video specific
+        $video->sourceId      = 'unit-test.fixture';
+        $video->sourceUrl     = 'http://example.com/unit/test.fixture';
+        $video->posterName    = 'Uncle Nit';
+        $video->posterProfile = 'http://example.com/profile/unit';
+        $video->datePosted    = '2014-07-15T06:46:00';
+
+        $video->duration      = 181;
+        $video->numberViews   = 8192;
+
+        //print_r($video);
+        return $video;
     }
 }
