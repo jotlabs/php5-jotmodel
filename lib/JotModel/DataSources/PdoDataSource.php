@@ -4,6 +4,7 @@ namespace JotModel\DataSources;
 use PDO;
 use JotModel\DataSource;
 use JotModel\Queries\Sql\SqlQueryBuilder;
+use JotModel\Queries\Sql\SqlSaverFactory;
 use JotModel\Exceptions\JotModelException;
 
 class PdoDataSource implements DataSource
@@ -62,6 +63,29 @@ class PdoDataSource implements DataSource
         }
 
         return $results;
+    }
+
+
+    public function save($model)
+    {
+        $response = false;
+        $factory  = SqlSaverFactory::getInstance();
+        $saver    = $factory->getSqlSaver($model);
+
+        if ($saver) {
+            $saver->setDataSource($this);
+            $response = $saver->save($model, $this);
+        }
+
+        return $response;
+    }
+
+
+    public function insert($insert, $params)
+    {
+        $statement = $this->getStatement($insert);
+        $response  = $this->execQuery($statement, $params);
+        return $response;
     }
 
 
@@ -137,6 +161,14 @@ class PdoDataSource implements DataSource
     }
 
 
+    protected function execQuery($statement, $params)
+    {
+        $response = $statement->execute($params);
+        $this->isPdoError($statement);
+        return $response;
+    }
+
+
     protected function getParameters($query)
     {
         $params = $this->applyPaginationParams($query);
@@ -195,7 +227,7 @@ class PdoDataSource implements DataSource
             if (!$this->isPdoError($statement)) {
 
                 // Set fetch-mode
-                if ($sqlQuery->getModelClass()) {
+                if (method_exists($sqlQuery, 'getModelClass') && $sqlQuery->getModelClass()) {
                     $statement->setFetchMode(PDO::FETCH_CLASS, $sqlQuery->getModelClass());
                 } else {
                     $statement->setFetchMode(PDO::FETCH_OBJ);
