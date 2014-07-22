@@ -7,6 +7,8 @@ use JotModel\Queries\Sql\Statements\InsertStatement;
 
 class VideoSqlSaver extends SqlSaver
 {
+    const STATUS_ACTIVE = 1;
+
     protected $dataSource;
     protected $videoId;
 
@@ -145,7 +147,8 @@ class VideoSqlSaver extends SqlSaver
         $insert->setQueryName($stmName);
         $insert->setStatement($this->queries['saveEnvelope']);
 
-        $statusId = 1;
+        // TODO: Fix statusId and modelId properly
+        $statusId = self::STATUS_ACTIVE;
         $modelId  = 1;
 
         // How do we get the parameters needed?
