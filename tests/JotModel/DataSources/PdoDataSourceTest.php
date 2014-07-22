@@ -82,6 +82,27 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function testGetAllContentModels()
+    {
+        $builder = new QueryBuilder();
+        $builder
+            ->setModelClass('JotModel\Models\ContentModel')
+            ->setQueryName('getAllModels');
+
+        $query  = $builder->build();
+        $models = $this->dataSource->find($query);
+
+        $this->assertNotNull($models);
+
+        foreach ($models as $model) {
+            $this->assertNotNull($model);
+            $this->assertTrue(is_a($model, 'JotModel\Models\ContentModel'));
+            $this->assertNotNull($model->slug);
+            $this->assertNotNull($model->typeSlug);
+        }
+    }
+
+
     public function testSaveModelSaves()
     {
         $video    = $this->createVideoModel();
