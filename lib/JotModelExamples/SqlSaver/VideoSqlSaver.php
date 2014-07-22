@@ -52,14 +52,14 @@ class VideoSqlSaver extends SqlSaver
 
         if ($dbVideo) {
             // Existing video, it's an update
-            echo "[UPDATE]";
+            echo "[U]";
         } else {
             // New video, it's an insert
-            echo "[INSERT]";
+            echo "[I]";
             $videoId = $this->saveVideo($video);
 
             if ($videoId) {
-                echo "[-INFO-] Video saved. Video id: {$videoId}\n";
+                //echo "[-INFO-] Video saved. Video id: {$videoId}\n";
                 //$this->saveVideoBlobs($video->blobs, $videoId);
                 //$this->saveVideoImages($video->blobs, $videoId);
                 $response = $this->saveEnvelope($video, $videoId);
@@ -93,11 +93,6 @@ class VideoSqlSaver extends SqlSaver
         $insert->setQueryName($stmName);
         $insert->setStatement($this->queries[$stmName]);
 
-
-        //print_r($video);
-        //print_r($insert);
-
-        // How do we get the parameters needed?
         $params = array(
             ':sourceId'      => $video->sourceId,
             ':sourceUrl'     => $video->sourceUrl,
@@ -108,12 +103,9 @@ class VideoSqlSaver extends SqlSaver
             ':numberViews'   => $video->numberViews
         );
 
-        //print_r($params);
         $response = $this->dataSource->insert($insert, $params);
 
         if ($response) {
-            //echo "[-INFO-] Video saved.\n";
-
             // Get the video id of the newly saved video and return it.
             $dbVideo  = $this->getVideoBySourceId($video->sourceId);
 
@@ -140,8 +132,6 @@ class VideoSqlSaver extends SqlSaver
 
     protected function saveEnvelope($model, $contentId)
     {
-        print_r($model);
-
         $stmName = 'saveEnvelope';
         $insert = new InsertStatement();
         $insert->setQueryName($stmName);
