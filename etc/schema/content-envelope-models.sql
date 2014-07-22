@@ -103,3 +103,20 @@ FROM `content`
 LEFT JOIN `content_status` ON content.statusId = content_status.id
 LEFT JOIN `content_models` ON content.modelId  = content_models.id
 LEFT JOIN `content_types`  ON content_models.typeId = content_types.id;
+
+
+--
+-- View Model: Content Type Models
+-- A one-table view of content model and it's associated content type
+--
+CREATE VIEW `content_type_models` AS
+SELECT
+    models.id       AS id,
+    models.slug     AS slug,
+    models.title    AS title,
+    types.id        AS typeId,
+    types.slug      AS typeSlug,
+    types.title     AS typeTitle
+FROM `content_models` AS `models`
+LEFT JOIN `content_types` AS `types` ON models.typeId = types.id;
+
