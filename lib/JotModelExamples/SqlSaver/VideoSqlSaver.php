@@ -14,7 +14,7 @@ class VideoSqlSaver extends SqlSaver
         'saveVideo'      => 'INSERT INTO `videos`  VALUES(NULL, :sourceId, :sourceUrl, :posterName, :posterProfile, :datePosted, :duration, :numberViews);',
         'saveVideoBlob'  => 'INSERT INTO `video_blobs` VALUES()',
         'saveVideoImage' => 'INSERT INTO `video_blobs` VALUES()',
-        'saveContent'    => ''
+        'saveEnvelope'   => 'INSERT INTO `content` VALUES(NULL, :statusId, :modelId, :contentId, :slug, :title, :excerpt, :extra1, :extra2, :permalink, :image, :dateAdded, :dateUpdated, :version, :score);'
     );
 
     protected $saveTree = array(
@@ -57,9 +57,10 @@ class VideoSqlSaver extends SqlSaver
             $videoId = $this->saveVideo($video);
 
             if ($videoId) {
-                $this->saveVideoBlobs($video->blobs, $videoId);
-                $this->saveVideoImages($video->blobs, $videoId);
-                $this->saveEnvelope($video, $videoId);
+                echo "[-INFO-] Video saved. Video id: {$videoId}\n";
+                //$this->saveVideoBlobs($video->blobs, $videoId);
+                //$this->saveVideoImages($video->blobs, $videoId);
+                $response = $this->saveEnvelope($video, $videoId);
             }
         }
 
@@ -116,10 +117,8 @@ class VideoSqlSaver extends SqlSaver
 
             if ($dbVideo) {
                 $videoId = $dbVideo->getId();
-                //echo "[-INFO-] Video id: {$videoId}\n";
             }
         }
-
 
         return $videoId;
     }
@@ -137,8 +136,38 @@ class VideoSqlSaver extends SqlSaver
     }
 
 
-    protected function saveEnvelope($model, $videoId)
+    protected function saveEnvelope($model, $contentId)
     {
+        print_r($model);
 
+        $stmName = 'saveEnvelope';
+        $insert = new InsertStatement();
+        $insert->setQueryName($stmName);
+        $insert->setStatement($this->queries['saveEnvelope']);
+
+        $statusId = 1;
+        $modelId  = 1;
+
+        // How do we get the parameters needed?
+        $params = array(
+            ':statusId'    => $statusId,
+            ':modelId'     => $modelId,
+            ':contentId'   => $contentId,
+            ':slug'        => $model->slug,
+            ':title'       => $model->title,
+            ':excerpt'     => $model->excerpt,
+            ':extra1'      => $model->extra1,
+            ':extra2'      => $model->extra2,
+            ':permalink'   => $model->permalink,
+            ':image'       => $model->imageTemplate,
+            ':dateAdded'   => $model->dateAdded,
+            ':dateUpdated' => $model->dateUpdated,
+            ':version'     => $model->version,
+            ':score'       => $model->score
+        );
+
+        //print_r($params);
+        $response = $this->dataSource->insert($insert, $params);
+        return $response;
     }
 }
