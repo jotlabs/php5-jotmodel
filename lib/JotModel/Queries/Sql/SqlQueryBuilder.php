@@ -269,20 +269,23 @@ class SqlQueryBuilder
     protected function processSqlHydrates($modelClass)
     {
         $fragments    = $modelClass::$SQL_FRAGMENTS;
-        $hydrateSpecs = $fragments['hydrate'];
 
-        //echo "Model Name: {$this->modelName}\n";
+        if (array_key_exists('hydrate', $fragments)) {
+            $hydrateSpecs = $fragments['hydrate'];
 
-        foreach ($this->toHydrate as $field => $table) {
-            if (array_key_exists($table, $hydrateSpecs)) {
-                $hydrateSpec = $hydrateSpecs[$table];
+            //echo "Model Name: {$this->modelName}\n";
 
-                if (empty($hydrateSpec['tableName'])) {
-                    $hydrateSpec['tableName'] = $table;
+            foreach ($this->toHydrate as $field => $table) {
+                if (array_key_exists($table, $hydrateSpecs)) {
+                    $hydrateSpec = $hydrateSpecs[$table];
+
+                    if (empty($hydrateSpec['tableName'])) {
+                        $hydrateSpec['tableName'] = $table;
+                    }
+
+                    $sqlQuery = $this->createHydrateQuery($field, $hydrateSpec);
+                    $this->sqlHydrates[] = $sqlQuery;
                 }
-
-                $sqlQuery = $this->createHydrateQuery($field, $hydrateSpec);
-                $this->sqlHydrates[] = $sqlQuery;
             }
         }
 
@@ -342,10 +345,14 @@ class SqlQueryBuilder
         $queryStructure = null;
         $modelClass     = $this->modelClass;
         $fragments      = $modelClass::$SQL_FRAGMENTS;
-        $modelQueries   = $fragments['queries'];
 
-        if ($this->queryName && array_key_exists($this->queryName, $modelQueries)) {
-            $queryStructure = $modelQueries[$this->queryName];
+        if (array_key_exists('queries', $fragments)) {
+            $modelQueries   = $fragments['queries'];
+
+            if ($this->queryName && array_key_exists($this->queryName, $modelQueries)) {
+                $queryStructure = $modelQueries[$this->queryName];
+            }
+
         }
 
         return $queryStructure;
