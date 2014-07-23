@@ -122,6 +122,9 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
         $newVideo = $this->dataSource->findOne($query);
 
         $this->assertNotNull($newVideo);
+        $this->assertEquals($video->slug, $newVideo->slug);
+        $this->assertEquals('video', $newVideo->type);
+        $this->assertEquals('video', $newVideo->model);
     }
 
 
