@@ -19,13 +19,12 @@ class VideoSqlSaver extends SqlSaver
         'saveEnvelope'   => 'INSERT INTO `content` VALUES(NULL, :statusId, :modelId, :contentId, :slug, :title, :excerpt, :extra1, :extra2, :permalink, :image, :dateAdded, :dateUpdated, :version, :score);'
     );
 
-    protected $saveTree = array(
-    );
+    protected $typeModels;
 
 
     public function __construct()
     {
-
+        $this->typeModels = array();
     }
 
 
@@ -139,7 +138,9 @@ class VideoSqlSaver extends SqlSaver
 
         // TODO: Fix statusId and modelId properly
         $statusId = self::STATUS_ACTIVE;
-        $modelId  = 1;
+
+        $typeModel = $this->getTypeModel('video');
+        $modelId   = ($typeModel) ? $typeModel->getId() : 0;
 
         // How do we get the parameters needed?
         $params = array(
@@ -162,5 +163,32 @@ class VideoSqlSaver extends SqlSaver
         //print_r($params);
         $response = $this->dataSource->insert($insert, $params);
         return $response;
+    }
+
+
+    protected function getTypeModel($modelName)
+    {
+        $typeModel = null;
+
+        if (empty($this->typeModels)) {
+            $builder = new QueryBuilder();
+            $builder
+                ->setModelClass('JotModel\Models\ContentModel')
+                ->setQueryName('getAllModels');
+
+            $query  = $builder->build();
+            $models = $this->dataSource->find($query);
+
+            foreach ($models as $model) {
+                $this->typeModels[$model->slug] = $model;
+            }
+
+        }
+
+        if (array_key_exists($modelName, $this->typeModels)) {
+            $typeModel = $this->typeModels[$modelName];
+        }
+
+        return $typeModel;
     }
 }
