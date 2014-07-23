@@ -2,47 +2,17 @@
 namespace JotModelExamples\SqlSaver;
 
 use JotModel\Queries\QueryBuilder;
-use JotModel\Queries\Sql\SqlSaver;
+use JotModel\Queries\Sql\SqlContentSaver;
 use JotModel\Queries\Sql\Statements\InsertStatement;
 
-class VideoSqlSaver extends SqlSaver
+class VideoSqlSaver extends SqlContentSaver
 {
-    const STATUS_ACTIVE = 1;
-
-    protected $dataSource;
-    protected $videoId;
-
     protected $queries = array(
         'saveVideo'      => 'INSERT INTO `videos`  VALUES(NULL, :sourceId, :sourceUrl, :posterName, :posterProfile, :datePosted, :duration, :numberViews);',
         'saveVideoBlob'  => 'INSERT INTO `video_blobs` VALUES()',
-        'saveVideoImage' => 'INSERT INTO `video_blobs` VALUES()',
-        'saveEnvelope'   => 'INSERT INTO `content` VALUES(NULL, :statusId, :modelId, :contentId, :slug, :title, :excerpt, :extra1, :extra2, :permalink, :image, :dateAdded, :dateUpdated, :version, :score);'
+        'saveVideoImage' => 'INSERT INTO `video_blobs` VALUES()'
     );
 
-    protected $typeModels;
-
-
-    public function __construct()
-    {
-        $this->typeModels = array();
-    }
-
-
-    public function setDataSource($dataSource)
-    {
-        $this->dataSource = $dataSource;
-    }
-
-    /****************
-
-    * check video slug doesn't already exist
-    * Save video
-    * Get video id
-        * Save video blobs
-        * Save video images
-        * Save content envelope
-
-    ****************/
 
     public function save($video)
     {
@@ -126,69 +96,5 @@ class VideoSqlSaver extends SqlSaver
     protected function saveVideoImages($images, $videoId)
     {
 
-    }
-
-
-    protected function saveEnvelope($model, $contentId)
-    {
-        $stmName = 'saveEnvelope';
-        $insert = new InsertStatement();
-        $insert->setQueryName($stmName);
-        $insert->setStatement($this->queries['saveEnvelope']);
-
-        // TODO: Fix statusId and modelId properly
-        $statusId = self::STATUS_ACTIVE;
-
-        $typeModel = $this->getTypeModel('video');
-        $modelId   = ($typeModel) ? $typeModel->getId() : 0;
-
-        // How do we get the parameters needed?
-        $params = array(
-            ':statusId'    => $statusId,
-            ':modelId'     => $modelId,
-            ':contentId'   => $contentId,
-            ':slug'        => $model->slug,
-            ':title'       => $model->title,
-            ':excerpt'     => $model->excerpt,
-            ':extra1'      => $model->extra1,
-            ':extra2'      => $model->extra2,
-            ':permalink'   => $model->permalink,
-            ':image'       => $model->imageTemplate,
-            ':dateAdded'   => $model->dateAdded,
-            ':dateUpdated' => $model->dateUpdated,
-            ':version'     => $model->version,
-            ':score'       => $model->score
-        );
-
-        //print_r($params);
-        $response = $this->dataSource->insert($insert, $params);
-        return $response;
-    }
-
-
-    protected function getTypeModel($modelName)
-    {
-        $typeModel = null;
-
-        if (empty($this->typeModels)) {
-            $builder = new QueryBuilder();
-            $builder
-                ->setModelClass('JotModel\Models\ContentModel')
-                ->setQueryName('getAllModels');
-
-            $query  = $builder->build();
-            $models = $this->dataSource->find($query);
-
-            foreach ($models as $model) {
-                $this->typeModels[$model->slug] = $model;
-            }
-
-        }
-
-        if (array_key_exists($modelName, $this->typeModels)) {
-            $typeModel = $this->typeModels[$modelName];
-        }
-
-        return $typeModel;
     }
 }
