@@ -37,6 +37,8 @@ abstract class SqlContentSaver
         $typeModel = $this->getTypeModel($modelName);
         $modelId   = ($typeModel) ? $typeModel->getId() : 0;
 
+        $now = date('c');
+
         // How do we get the parameters needed?
         $params = array(
             ':statusId'    => $statusId,
@@ -49,10 +51,10 @@ abstract class SqlContentSaver
             ':extra2'      => $model->extra2,
             ':permalink'   => $model->permalink,
             ':image'       => $model->imageTemplate,
-            ':dateAdded'   => $model->dateAdded,
-            ':dateUpdated' => $model->dateUpdated,
-            ':version'     => $model->version,
-            ':score'       => $model->score
+            ':dateAdded'   => ($model->dateAdded)   ? $model->dateAdded : $now,
+            ':dateUpdated' => ($model->dateUpdated) ? $model->dateUpdated : $now,
+            ':version'     => ($model->version)     ? $model->version : 1,
+            ':score'       => ($model->score)       ? $model->score : 0
         );
 
         //print_r($params);
