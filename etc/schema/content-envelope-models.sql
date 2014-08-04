@@ -17,25 +17,26 @@ CREATE TABLE IF NOT EXISTS `content_status` (
 
 
 --
--- Content Types -- maps the content envelope model to the table schema
---
-CREATE TABLE IF NOT EXISTS `content_types` (
-    id      INTEGER PRIMARY KEY AUTO_INCREMENT,
-    slug    VARCHAR(63) UNIQUE,
-    title   VARCHAR(63)
-);
-
-
---
 -- Content Models -- classifies content into Models known by the Application
 --
 CREATE TABLE IF NOT EXISTS `content_models` (
     id      INTEGER PRIMARY KEY AUTO_INCREMENT,
-    typeId  INTEGER,
     slug    VARCHAR(63) UNIQUE,
-    title   VARCHAR(63) UNIQUE,
+    title   VARCHAR(63) UNIQUE
+);
 
-    FOREIGN KEY (`typeId`) REFERENCES `content_types`(`id`)
+
+--
+-- Content Types -- maps the content envelope model to the table schema
+--                  type is a sub-division of models. (Many types of article model)
+--
+CREATE TABLE IF NOT EXISTS `content_types` (
+    id          INTEGER PRIMARY KEY AUTO_INCREMENT,
+    modelId     INTEGER,
+    slug        VARCHAR(63) UNIQUE,
+    title       VARCHAR(63),
+
+    FOREIGN KEY (`modelId`) REFERENCES `content_models`(`id`)
 );
 
 
@@ -46,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `content` (
     envelopeId      INTEGER PRIMARY KEY AUTO_INCREMENT,
     statusId        INTEGER,
 
-    modelId         INTEGER,
+    typeId          INTEGER,
     contentId       INTEGER,
 
     slug            VARCHAR(255),
@@ -65,12 +66,12 @@ CREATE TABLE IF NOT EXISTS `content` (
     version         INTEGER,
     score           INTEGER,
 
-    FOREIGN KEY (`modelId`)  REFERENCES `content_models`(`id`),
+    FOREIGN KEY (`typeId`)   REFERENCES `content_types`(`id`),
     FOREIGN KEY (`statusId`) REFERENCES `content_status`(`id`)
 );
 
 CREATE INDEX `content_1` ON `content` ( statusId, slug );
-CREATE INDEX `content_2` ON `content` ( modelId, contentId );
+CREATE INDEX `content_2` ON `content` ( typeId, contentId );
 CREATE INDEX `content_3` ON `content` ( slug );
 
 --
@@ -83,8 +84,8 @@ SELECT
     content.envelopeId    AS envelopeId,
     content.contentId     AS contentId,
     content.statusId      AS statusId,
-    content.modelId       AS modelId,
-    content_types.id      AS typesId,
+    content_models.id     AS modelId,
+    content.typeId        AS typeId,
     content_status.slug   AS status,
     content_models.slug   AS model,
     content_types.slug    AS type,
@@ -101,8 +102,8 @@ SELECT
     content.score         AS score
 FROM `content`
 LEFT JOIN `content_status` ON content.statusId = content_status.id
-LEFT JOIN `content_models` ON content.modelId  = content_models.id
-LEFT JOIN `content_types`  ON content_models.typeId = content_types.id;
+LEFT JOIN `content_types`  ON content.typeId = content_types.id
+LEFT JOIN `content_models` ON content_types.modelId  = content_models.id;
 
 
 --
@@ -117,6 +118,6 @@ SELECT
     types.id        AS typeId,
     types.slug      AS typeSlug,
     types.title     AS typeTitle
-FROM `content_models` AS `models`
-LEFT JOIN `content_types` AS `types` ON models.typeId = types.id;
+FROM `content_types` AS `types`
+LEFT JOIN `content_models` AS `models` ON types.modelId = models.id;
 
