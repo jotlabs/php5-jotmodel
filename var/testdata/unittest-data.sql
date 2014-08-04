@@ -1,8 +1,8 @@
 
 -- content: supporting tables
 INSERT INTO `content_status` VALUES (1,'A','Active');
-INSERT INTO `content_types`  VALUES (1,'video','Video');
-INSERT INTO `content_models` VALUES (1,1,'video','Video');
+INSERT INTO `content_models` VALUES (1,'video','Video');
+INSERT INTO `content_types`  VALUES (1,1,'video','Video');
 
 -- content: content envelopes
 INSERT INTO `content` VALUES (1,1,1,1,'primary-series-ashtanga-with-sri-k-pattabhi-jois','Primary Series Ashtanga with Sri K. Pattabhi Jois','1993 Yoga Works Productions video of the Ashtanga Yoga Primary Series with Sri K. Pattabhi Jois. Students: Chuck Miller & Maty Ezraty - http://www.chuckandma...','','','/video/primary-series-ashtanga-with-sri-k-pattabhi-jois','IMAGE','2013-06-03 22:18:26','2013-06-03 21:18:26',1,97);
