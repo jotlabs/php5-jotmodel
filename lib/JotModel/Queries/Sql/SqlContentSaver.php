@@ -49,16 +49,21 @@ abstract class SqlContentSaver
             ':excerpt'     => $model->excerpt,
             ':extra1'      => $model->extra1,
             ':extra2'      => $model->extra2,
-            ':permalink'   => $model->permalink,
+            ':permalink'   => ($model->permalink)   ? $model->permalink : $model->slug,
             ':image'       => $model->imageTemplate,
             ':dateAdded'   => ($model->dateAdded)   ? $model->dateAdded : $now,
-            ':dateUpdated' => ($model->dateUpdated) ? $model->dateUpdated : $now,
+            ':dateUpdated' => ($model->dateUpdated) ? $model->dateUpdated : ($model->dateAdded)
+                                                    ? $model->dateAdded : $now,
             ':version'     => ($model->version)     ? $model->version : 1,
             ':score'       => ($model->score)       ? $model->score : 0
         );
 
         //print_r($params);
         $response = $this->dataSource->insert($insert, $params);
+
+
+        // TODO: Save decorators
+
         return $response;
     }
 
