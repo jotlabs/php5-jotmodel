@@ -131,6 +131,16 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($newVideo->dateUpdated);
         $this->assertNotNull($newVideo->version);
         $this->assertNotNull($newVideo->score);
+
+        // Check categories
+        $this->assertNotNull($newVideo->categories);
+        $this->assertTrue(is_array($newVideo->categories));
+        $this->assertTrue(count($newVideo->categories) === 1);
+
+        $category = $newVideo->categories[0];
+        $this->assertNotNull($category);
+        $this->assertTrue(is_a($category, 'JotModel\Models\Category'));
+        $this->assertEquals('unit-test', $category->category);
     }
 
 
@@ -178,6 +188,14 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
 
         $video->duration      = 181;
         $video->numberViews   = 8192;
+
+        $video->categories    = array(
+            'unit-test' => 'Unit Test'
+        );
+
+        $video->tags          = array(
+            'fixture'   => 'Fixture'
+        );
 
         //print_r($video);
         return $video;
