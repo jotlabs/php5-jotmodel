@@ -3,7 +3,7 @@ namespace JotModel\Models;
 
 class Category
 {
-    public static $MODEL = 'categories';
+    public static $MODEL = 'category_content';
 
     public static $SQL_FRAGMENTS = array(
         'queries' => array(),
@@ -13,7 +13,7 @@ class Category
 
     public static $SQL_FIELDS = array(
         'envelopeId'       => '',
-        'categoryid'       => '',
+        'categoryId'       => '',
         'category'         => '',
         'name'             => '',
         'collectionId'     => '',
