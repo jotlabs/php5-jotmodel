@@ -102,7 +102,7 @@ abstract class SqlContentSaver
         $stmName = 'saveEnvelopeCategory';
         $insert  = new InsertStatement();
         $insert->setQueryName($stmName);
-        $insert->setStatement($this->contQueries['saveEnvelopeCategory']);
+        $insert->setStatement($this->contQueries[$stmName]);
 
         foreach ($modelCategories as $slug => $title) {
             $category   = (object) array(
@@ -135,7 +135,7 @@ abstract class SqlContentSaver
             $stmName = 'saveCategory';
             $insert  = new InsertStatement();
             $insert->setQueryName($stmName);
-            $insert->setStatement($this->contQueries['saveCategory']);
+            $insert->setStatement($this->contQueries[$stmName]);
 
             $params = array(
                 ':slug'         => $category->slug,
