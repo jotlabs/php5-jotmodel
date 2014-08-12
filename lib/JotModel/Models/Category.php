@@ -6,7 +6,9 @@ class Category
     public static $MODEL = 'category_content';
 
     public static $SQL_FRAGMENTS = array(
-        'queries' => array(),
+        'queries' => array(
+            'categoryBySlug' => 'SELECT * FROM `categories` WHERE slug = :slug;'
+        ),
         'hydrate' => array(),
         'joins'   => array()
     );
