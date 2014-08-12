@@ -207,15 +207,17 @@ class SqlQueryBuilder
 
     protected function processSqlFilters($modelClass)
     {
-        // TODO: Replace this hacky with something schema based
-        if (array_key_exists('tag', $this->filters)) {
-            $join = 'INNER JOIN `tagged_content` AS `tc` ON tc.envelopeId = ce.envelopeId';
-            $this->sqlJoins[] = $join;
-        }
+        if (is_subclass_of($modelClass, self::CONTENT_ENVELOPE_CLASS)) {
+            // TODO: Replace this hacky with something schema based
+            if (array_key_exists('tag', $this->filters)) {
+                $join = 'INNER JOIN `tagged_content` AS `tc` ON tc.envelopeId = ce.envelopeId';
+                $this->sqlJoins[] = $join;
+            }
 
-        if (array_key_exists('category', $this->filters)) {
-            $join = 'INNER JOIN `category_content` AS `cc` ON cc.envelopeId = ce.envelopeId';
-            $this->sqlJoins[] = $join;
+            if (array_key_exists('category', $this->filters)) {
+                $join = 'INNER JOIN `category_content` AS `cc` ON cc.envelopeId = ce.envelopeId';
+                $this->sqlJoins[] = $join;
+            }
         }
     }
 
