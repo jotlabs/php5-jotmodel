@@ -18,9 +18,11 @@ abstract class SqlContentSaver
 
         // Category Saver
         'saveEnvelopeCategory' => 'INSERT INTO `content_categories` VALUES(:contentId, :categoryId, :dateAdded);',
-        'saveCategory' => 'INSERT INTO `categories` VALUES(NULL, :collectionId, :slug, :name);'
+        'saveCategory' => 'INSERT INTO `categories` VALUES(NULL, :collectionId, :slug, :name);',
 
         // Tag Saver
+        'saveEnvelopeTag' => 'INSERT INTO `content_tags` VALUES(:contentId, :tagId, :dateAdded);',
+        'saveTag' => 'INSERT INTO `tags` VALUES(NULL, :collectionId, :slug, :name);'
     );
 
 
@@ -89,12 +91,6 @@ abstract class SqlContentSaver
 
 
         return $response;
-    }
-
-
-    protected function saveContentTags($envelopeId, $modelTags)
-    {
-        //echo "Saving Content Tags for {$envelopeId}\n";
     }
 
 
@@ -170,6 +166,81 @@ abstract class SqlContentSaver
         $category = $this->dataSource->findOne($query, false);
 
         return $category ? $category->id : null;
+    }
+
+
+    protected function saveContentTags($envelopeId, $modelTags)
+    {
+        $response = false;
+        $now = date('c');
+
+        $stmName = 'saveEnvelopeTag';
+        $insert  = new InsertStatement();
+        $insert->setQueryName($stmName);
+        $insert->setStatement($this->contQueries[$stmName]);
+
+        foreach ($modelTags as $slug => $title) {
+            $tag   = (object) array(
+                'slug'         => $slug,
+                'title'        => $title
+            );
+
+            $tagId = $this->saveTag($tag);
+
+            if ($tagId) {
+                $params = array(
+                    ':contentId' => $envelopeId,
+                    ':tagId'     => $tagId,
+                    ':dateAdded' => $now
+                );
+
+                $response = $this->dataSource->insert($insert, $params);
+            }
+        }
+
+        return $response;
+    }
+
+
+    protected function saveTag($tag)
+    {
+        $tagId = $this->getTagBySlug($tag->slug);
+
+        if (!$tagId) {
+            $stmName = 'saveTag';
+            $insert  = new InsertStatement();
+            $insert->setQueryName($stmName);
+            $insert->setStatement($this->contQueries[$stmName]);
+
+            $params = array(
+                ':slug'         => $tag->slug,
+                ':name'         => $tag->title,
+                ':collectionId' => 1
+            );
+
+            $response = $this->dataSource->insert($insert, $params);
+
+            if ($response) {
+                $tagId = $this->getTagBySlug($tag->slug);
+            }
+        }
+
+        return $tagId;
+    }
+
+
+    protected function getTagBySlug($tagSlug)
+    {
+        $builder = new QueryBuilder();
+        $builder
+            ->setModelClass('JotModel\Models\Tag')
+            ->setQueryName('tagBySlug')
+            ->filter('slug', $tagSlug);
+
+        $query = $builder->build();
+        $tag   = $this->dataSource->findOne($query, false);
+
+        return $tag ? $tag->id : null;
     }
 
 
