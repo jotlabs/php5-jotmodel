@@ -3,10 +3,12 @@ namespace JotModel\Models;
 
 class Tag
 {
-    public static $MODEL = 'tags';
+    public static $MODEL = 'tagged_content';
 
     public static $SQL_FRAGMENTS = array(
-        'queries' => array(),
+        'queries' => array(
+            'tagBySlug' => 'SELECT * FROM `tags` WHERE slug = :slug;'
+        ),
         'hydrate' => array(),
         'joins'   => array()
     );
