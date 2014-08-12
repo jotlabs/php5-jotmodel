@@ -141,6 +141,17 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($category);
         $this->assertTrue(is_a($category, 'JotModel\Models\Category'));
         $this->assertEquals('unit-test', $category->category);
+
+
+        // Check tags
+        $this->assertNotNull($newVideo->tags);
+        $this->assertTrue(is_array($newVideo->tags));
+        $this->assertTrue(count($newVideo->tags) === 1);
+
+        $tag = $newVideo->tags[0];
+        $this->assertNotNull($tag);
+        $this->assertTrue(is_a($tag, 'JotModel\Models\Tag'));
+        $this->assertEquals('fixture', $tag->tag);
     }
 
 
