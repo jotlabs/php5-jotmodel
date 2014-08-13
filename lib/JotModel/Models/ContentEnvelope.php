@@ -42,6 +42,7 @@ class ContentEnvelope
         'excerpt'       => 'ce.excerpt',
         'extra1'        => 'ce.extra1',
         'extra2'        => 'ce.extra2',
+        'pageUrl'       => 'ce.pageUrl',
         'permalink'     => 'ce.permalink',
         'imageTemplate' => 'ce.imageTemplate',
         'dateAdded'     => 'ce.dateAdded',
