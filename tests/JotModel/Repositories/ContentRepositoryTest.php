@@ -41,5 +41,7 @@ class ContentRepositoryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('A', $content->status);
 
         $this->assertEquals(1, $content->version);
+        $this->assertNotNull($content->pageUrl);
+        $this->assertNotNull($content->permalink);
     }
 }
