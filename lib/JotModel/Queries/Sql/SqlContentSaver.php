@@ -14,7 +14,7 @@ abstract class SqlContentSaver
 
     private $typeModels  = array();
     private $contQueries = array(
-        'saveEnvelope'   => 'INSERT INTO `content` VALUES(NULL, :statusId, :modelId, :contentId, :slug, :title, :excerpt, :extra1, :extra2, :permalink, :image, :dateAdded, :dateUpdated, :version, :score);',
+        'saveEnvelope'   => 'INSERT INTO `content` VALUES(NULL, :statusId, :modelId, :contentId, :slug, :title, :excerpt, :extra1, :extra2, :pageUrl, :permalink, :image, :dateAdded, :dateUpdated, :version, :score);',
 
         // Category Saver
         'saveEnvelopeCategory' => 'INSERT INTO `content_categories` VALUES(:contentId, :categoryId, :dateAdded);',
@@ -48,6 +48,7 @@ abstract class SqlContentSaver
         $modelId   = ($typeModel) ? $typeModel->getId() : 0;
 
         $now = date('c');
+        $pageUrl = ($model->permalink) ? $model->permalink : $model->slug;
 
         // How do we get the parameters needed?
         $params = array(
@@ -59,7 +60,8 @@ abstract class SqlContentSaver
             ':excerpt'     => $model->excerpt,
             ':extra1'      => $model->extra1,
             ':extra2'      => $model->extra2,
-            ':permalink'   => ($model->permalink)   ? $model->permalink : $model->slug,
+            ':pageUrl'     => $pageUrl,
+            ':permalink'   => $pageUrl,
             ':image'       => $model->imageTemplate,
             ':dateAdded'   => ($model->dateAdded)   ? $model->dateAdded : $now,
             ':dateUpdated' => ($model->dateUpdated) ? $model->dateUpdated : ($model->dateAdded)
