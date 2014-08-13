@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS `content` (
     extra1          VARCHAR(255),
     extra2          VARCHAR(255),
 
+    pageUrl         VARCHAR(255) UNIQUE,
     permalink       VARCHAR(255) UNIQUE,
     imageTemplate   VARCHAR(255),
 
@@ -94,6 +95,7 @@ SELECT
     content.excerpt       AS excerpt,
     content.extra1        AS extra1,
     content.extra2        AS extra2,
+    content.pageUrl       AS pageUrl,
     content.permalink     AS permalink,
     content.imageTemplate AS imageTemplate,
     content.dateAdded     AS dateAdded,
