@@ -50,6 +50,9 @@ abstract class SqlContentSaver
         $now = date('c');
         $pageUrl = ($model->permalink) ? $model->permalink : $model->slug;
 
+        $dateAdded   = ($model->dateAdded)   ? $model->dateAdded : $now;
+        $dateUpdated = ($model->dateUpdated) ? $model->dateUpdated : $dateAdded;
+
         // How do we get the parameters needed?
         $params = array(
             ':statusId'    => $statusId,
@@ -63,9 +66,8 @@ abstract class SqlContentSaver
             ':pageUrl'     => $pageUrl,
             ':permalink'   => $pageUrl,
             ':image'       => $model->imageTemplate,
-            ':dateAdded'   => ($model->dateAdded)   ? $model->dateAdded : $now,
-            ':dateUpdated' => ($model->dateUpdated) ? $model->dateUpdated : ($model->dateAdded)
-                                                    ? $model->dateAdded : $now,
+            ':dateAdded'   => $dateAdded,
+            ':dateUpdated' => $dateUpdated,
             ':version'     => ($model->version)     ? $model->version : 1,
             ':score'       => ($model->score)       ? $model->score : 0
         );
