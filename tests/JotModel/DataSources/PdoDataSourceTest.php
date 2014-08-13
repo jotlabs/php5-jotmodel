@@ -55,6 +55,8 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_a($video, 'JotModel\Models\ContentEnvelope'));
         $this->assertTrue(is_a($video, 'JotModelExamples\Models\Video'));
         $this->assertTrue(intval($video->getEnvelopeId()) > 0);
+        $this->assertNotNull($video->pageUrl);
+        $this->assertNotNull($video->permalink);
     }
 
 
@@ -131,6 +133,10 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($newVideo->dateUpdated);
         $this->assertNotNull($newVideo->version);
         $this->assertNotNull($newVideo->score);
+
+        $this->assertNotNull($newVideo->pageUrl);
+        $this->assertNotNull($newVideo->permalink);
+        $this->assertEquals($newVideo->pageUrl, $newVideo->permalink);
 
         // Check categories
         $this->assertNotNull($newVideo->categories);
