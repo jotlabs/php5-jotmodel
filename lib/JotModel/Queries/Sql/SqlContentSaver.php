@@ -75,7 +75,6 @@ abstract class SqlContentSaver
         //print_r($params);
         $response = $this->dataSource->insert($insert, $params);
 
-
         // TODO: Save decorators
         $envelopeId = $this->getEnvelopeIdBySlug($model->slug);
         if ($envelopeId) {
@@ -108,12 +107,7 @@ abstract class SqlContentSaver
         $insert->setQueryName($stmName);
         $insert->setStatement($this->contQueries[$stmName]);
 
-        foreach ($modelCategories as $slug => $title) {
-            $category   = (object) array(
-                'slug'         => $slug,
-                'title'        => $title
-            );
-
+        foreach ($modelCategories as $slug => $category) {
             $categoryId = $this->saveCategory($category);
 
             if ($categoryId) {

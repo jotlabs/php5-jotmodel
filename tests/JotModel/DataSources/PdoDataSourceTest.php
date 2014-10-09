@@ -207,7 +207,10 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
         $video->numberViews   = 8192;
 
         $video->categories    = array(
-            'unit-test' => 'Unit Test'
+            'unit-test' => (object) array(
+                'slug'  => 'unit-test',
+                'title' => 'Unit Test'
+            )
         );
 
         $video->tags          = array(
