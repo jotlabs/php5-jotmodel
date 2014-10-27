@@ -86,22 +86,22 @@ INSERT INTO `category_collections` VALUES(1, 'uncategorised', 'Uncategorised', 0
 
 INSERT INTO `categories` VALUES(1, 1, 'ashtanga', 'Ashtanga');
 
-INSERT INTO `content_categories` VALUES(1, 1, '2014-06-01');
-INSERT INTO `content_categories` VALUES(2, 1, '2014-06-01');
-INSERT INTO `content_categories` VALUES(3, 1, '2014-06-01');
-INSERT INTO `content_categories` VALUES(4, 1, '2014-06-01');
-INSERT INTO `content_categories` VALUES(5, 1, '2014-06-01');
-INSERT INTO `content_categories` VALUES(6, 1, '2014-06-01');
-INSERT INTO `content_categories` VALUES(7, 1, '2014-06-01');
-INSERT INTO `content_categories` VALUES(8, 1, '2014-06-01');
-INSERT INTO `content_categories` VALUES(9, 1, '2014-06-01');
-INSERT INTO `content_categories` VALUES(10, 1, '2014-06-01');
-INSERT INTO `content_categories` VALUES(11, 1, '2014-06-01');
-INSERT INTO `content_categories` VALUES(12, 1, '2014-06-01');
-INSERT INTO `content_categories` VALUES(13, 1, '2014-06-01');
-INSERT INTO `content_categories` VALUES(14, 1, '2014-06-01');
-INSERT INTO `content_categories` VALUES(15, 1, '2014-06-01');
-INSERT INTO `content_categories` VALUES(16, 1, '2014-06-01');
+INSERT INTO `content_categories` VALUES(1, 1, 'N', '2014-06-01');
+INSERT INTO `content_categories` VALUES(2, 1, 'N', '2014-06-01');
+INSERT INTO `content_categories` VALUES(3, 1, 'N', '2014-06-01');
+INSERT INTO `content_categories` VALUES(4, 1, 'N', '2014-06-01');
+INSERT INTO `content_categories` VALUES(5, 1, 'N', '2014-06-01');
+INSERT INTO `content_categories` VALUES(6, 1, 'N', '2014-06-01');
+INSERT INTO `content_categories` VALUES(7, 1, 'N', '2014-06-01');
+INSERT INTO `content_categories` VALUES(8, 1, 'N', '2014-06-01');
+INSERT INTO `content_categories` VALUES(9, 1, 'N', '2014-06-01');
+INSERT INTO `content_categories` VALUES(10, 1, 'N', '2014-06-01');
+INSERT INTO `content_categories` VALUES(11, 1, 'N', '2014-06-01');
+INSERT INTO `content_categories` VALUES(12, 1, 'N', '2014-06-01');
+INSERT INTO `content_categories` VALUES(13, 1, 'N', '2014-06-01');
+INSERT INTO `content_categories` VALUES(14, 1, 'N', '2014-06-01');
+INSERT INTO `content_categories` VALUES(15, 1, 'N', '2014-06-01');
+INSERT INTO `content_categories` VALUES(16, 1, 'N', '2014-06-01');
 
 
 
