@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
 CREATE TABLE IF NOT EXISTS `content_categories` (
     contentId   INTEGER,
     categoryId  INTEGER,
+    isPrimary   VARCHAR(1),
     dateAdded   DATETIME,
 
     FOREIGN KEY (`contentId`)  REFERENCES `content`(`envelopeId`),
@@ -41,6 +42,7 @@ CREATE VIEW `category_content` AS
 SELECT
     content_categories.contentId    AS envelopeId,
     content_categories.categoryId   AS categoryId,
+    content_categories.isPrimary    AS isPrimary,
     categories.slug                 AS category,
     categories.name                 AS name,
     categories.collectionId         AS collectionId,
