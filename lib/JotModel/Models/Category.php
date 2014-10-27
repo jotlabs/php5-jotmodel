@@ -16,6 +16,7 @@ class Category
     public static $SQL_FIELDS = array(
         'envelopeId'       => '',
         'categoryId'       => '',
+        'isPrimary'        => '',
         'category'         => '',
         'name'             => '',
         'collectionId'     => '',
@@ -29,6 +30,7 @@ class Category
     protected $categoryId;
     public $category;
     public $name;
+    public $isPrimary;
 
     protected $collectionId;
     public $collectionSlug;
