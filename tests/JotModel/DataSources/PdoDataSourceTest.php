@@ -141,12 +141,20 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
         // Check categories
         $this->assertNotNull($newVideo->categories);
         $this->assertTrue(is_array($newVideo->categories));
-        $this->assertTrue(count($newVideo->categories) === 1);
+        $this->assertTrue(count($newVideo->categories) === 2);
 
         $category = $newVideo->categories[0];
         $this->assertNotNull($category);
         $this->assertTrue(is_a($category, 'JotModel\Models\Category'));
         $this->assertEquals('unit-test', $category->category);
+        $this->assertEquals('N', $category->isPrimary);
+
+
+        $category = $newVideo->categories[1];
+        $this->assertNotNull($category);
+        $this->assertTrue(is_a($category, 'JotModel\Models\Category'));
+        $this->assertEquals('primary-cat', $category->category);
+        $this->assertEquals('Y', $category->isPrimary);
 
 
         // Check tags
@@ -210,7 +218,12 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
             'unit-test' => (object) array(
                 'slug'  => 'unit-test',
                 'title' => 'Unit Test'
-            )
+            ),
+            'primary-cat' => (object) array(
+                'slug'  => 'primary-cat',
+                'title' => 'Primary Category',
+                'isPrimary' => true
+            ),
         );
 
         $video->tags          = array(

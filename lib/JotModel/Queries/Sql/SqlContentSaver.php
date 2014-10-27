@@ -17,7 +17,7 @@ abstract class SqlContentSaver
         'saveEnvelope'   => 'INSERT INTO `content` VALUES(NULL, :statusId, :modelId, :contentId, :slug, :title, :excerpt, :extra1, :extra2, :pageUrl, :permalink, :image, :dateAdded, :dateUpdated, :version, :score);',
 
         // Category Saver
-        'saveEnvelopeCategory' => 'INSERT INTO `content_categories` VALUES(:contentId, :categoryId, :dateAdded);',
+        'saveEnvelopeCategory' => 'INSERT INTO `content_categories` VALUES(:contentId, :categoryId, :isPrimary, :dateAdded);',
         'saveCategory' => 'INSERT INTO `categories` VALUES(NULL, :collectionId, :slug, :name);',
 
         // Tag Saver
@@ -109,11 +109,13 @@ abstract class SqlContentSaver
 
         foreach ($modelCategories as $slug => $category) {
             $categoryId = $this->saveCategory($category);
+            $isPrimary  = (!empty($category->isPrimary) && $category->isPrimary)?'Y':'N';
 
             if ($categoryId) {
                 $params = array(
                     ':contentId'  => $envelopeId,
                     ':categoryId' => $categoryId,
+                    ':isPrimary'  => $isPrimary,
                     ':dateAdded'  => $now
                 );
 
