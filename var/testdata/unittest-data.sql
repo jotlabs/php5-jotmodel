@@ -1,7 +1,10 @@
 
 -- content: supporting tables
 INSERT INTO `content_status` VALUES (1,'A','Active');
+INSERT INTO `content_status` VALUES (2,'Z','Site');
+
 INSERT INTO `content_models` VALUES (1,'video','Video');
+
 INSERT INTO `content_types`  VALUES (1,1,'video','Video');
 
 -- content: content envelopes
