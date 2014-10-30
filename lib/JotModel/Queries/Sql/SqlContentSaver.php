@@ -9,6 +9,12 @@ use JotModel\Models\ContentEnvelope;
 abstract class SqlContentSaver
 {
     const STATUS_ACTIVE = 1;
+    const STATUS_SITE   = 2;
+
+    public static $statusList = array(
+        'A' => 1,
+        'Z' => 2
+    );
 
     protected $dataSource;
 
@@ -42,7 +48,7 @@ abstract class SqlContentSaver
         $insert->setQueryName($stmName);
         $insert->setStatement($this->contQueries['saveEnvelope']);
 
-        $statusId  = self::STATUS_ACTIVE;
+        $statusId  = $this->getStatusId($model->status);
         $modelName = $model::$MODEL_TYPE;
         $typeModel = $this->getTypeModel($modelName);
         $modelId   = ($typeModel) ? $typeModel->getId() : 0;
@@ -94,6 +100,18 @@ abstract class SqlContentSaver
 
 
         return $response;
+    }
+
+
+    protected function getStatusId($status)
+    {
+        $statusId = self::STATUS_ACTIVE;
+
+        if (!empty(self::$statusList[$status])) {
+            $statusId = self::$statusList[$status];
+        }
+
+        return $statusId;
     }
 
 

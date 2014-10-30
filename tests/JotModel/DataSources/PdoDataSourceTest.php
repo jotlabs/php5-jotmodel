@@ -127,7 +127,7 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($video->slug, $newVideo->slug);
         $this->assertEquals('video', $newVideo->type);
         $this->assertEquals('video', $newVideo->model);
-        $this->assertEquals('A', $newVideo->status);
+        $this->assertEquals('Z', $newVideo->status);
 
         $this->assertNotNull($newVideo->dateAdded);
         $this->assertNotNull($newVideo->dateUpdated);
@@ -195,7 +195,7 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
         $video->permalink     = 'http://example.com/unit/test.fixture';
         $video->imageTemplate = 'IMAGE';
 
-        //$video->status;
+        $video->status = 'Z';
         //$video->model;
         //$video->extra1;
         //$video->extra2;
