@@ -20,7 +20,7 @@ abstract class SqlContentSaver
 
     private $typeModels  = array();
     private $contQueries = array(
-        'saveEnvelope'   => 'INSERT INTO `content` VALUES(NULL, :statusId, :modelId, :contentId, :slug, :title, :excerpt, :extra1, :extra2, :pageUrl, :permalink, :image, :dateAdded, :dateUpdated, :version, :score);',
+        'saveEnvelope'   => 'INSERT INTO `content` VALUES(NULL, :statusId, :modelId, :contentId, :slug, :title, :excerpt, :extra1, :extra2, :pageUrl, :permalink, :image, :dateAdded, :dateUpdated, :guid, :version, :score);',
 
         // Category Saver
         'saveEnvelopeCategory' => 'INSERT INTO `content_categories` VALUES(:contentId, :categoryId, :isPrimary, :dateAdded);',
@@ -74,6 +74,7 @@ abstract class SqlContentSaver
             ':image'       => $model->imageTemplate,
             ':dateAdded'   => $dateAdded,
             ':dateUpdated' => $dateUpdated,
+            ':guid'        => $model->guid,
             ':version'     => ($model->version)     ? $model->version : 1,
             ':score'       => ($model->score)       ? $model->score : 0
         );

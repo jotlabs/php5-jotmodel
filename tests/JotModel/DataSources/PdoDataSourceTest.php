@@ -201,6 +201,8 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
         //$video->extra2;
         //$video->dateAdded;
         //$video->dateUpdated;
+
+        $video->guid = 'unit-test.guid';
         //$video->version;
         //$video->score;
 
