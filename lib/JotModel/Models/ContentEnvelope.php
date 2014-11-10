@@ -47,6 +47,7 @@ class ContentEnvelope
         'imageTemplate' => 'ce.imageTemplate',
         'dateAdded'     => 'ce.dateAdded',
         'dateUpdated'   => 'ce.dateUpdated',
+        'guid'          => 'ce.guid',
         'version'       => 'ce.version',
         'score'         => 'ce.score'
     );
@@ -70,6 +71,7 @@ class ContentEnvelope
     public $dateAdded;
     public $dateUpdated;
 
+    public $guid;
     public $version;
     public $score;
 
