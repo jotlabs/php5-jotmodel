@@ -60,6 +60,25 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function testGetBySlugReturnsOneContent()
+    {
+        $guid = 'video-7';
+        $builder = new QueryBuilder();
+        $builder
+            ->setModelClass('JotModelExamples\Models\Video')
+            ->setQueryName('getByGuid')
+            ->filter('guid', $guid);
+
+        $query = $builder->build();
+        $video = $this->dataSource->findOne($query);
+
+        $this->assertNotNull($video);
+        $this->assertEquals('JoHxl2k10xw', $video->sourceId);
+        $this->assertEquals('forward-jump-explained-ashtanga-yoga', $video->slug);
+
+    }
+
+
     public function testFindReturnsArrayOfModels()
     {
         $category = 'ashtanga';
