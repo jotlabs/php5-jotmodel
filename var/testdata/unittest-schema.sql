@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS `content` (
     dateAdded       DATETIME,
     dateUpdated     TIMESTAMP,
 
+    guid            VARCHAR(255) UNIQUE,
     version         INTEGER,
     score           INTEGER,
 
@@ -101,6 +102,7 @@ SELECT
     content.imageTemplate AS imageTemplate,
     content.dateAdded     AS dateAdded,
     content.dateUpdated   AS dateUpdated,
+    content.guid          AS guid,
     content.version       AS version,
     content.score         AS score
 FROM `content`
