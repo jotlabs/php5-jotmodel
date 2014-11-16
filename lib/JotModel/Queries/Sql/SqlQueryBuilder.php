@@ -166,7 +166,11 @@ class SqlQueryBuilder
         $this->modelName = $modelClass::$MODEL;
 
         if (!$this->tableName) {
-            $this->tableName = $this->modelName;
+            if ($this->modelName === 'content') {
+                $this->tableName = 'content_envelope` as `ce';
+            } else {
+                $this->tableName = $this->modelName;
+            }
         }
     }
 

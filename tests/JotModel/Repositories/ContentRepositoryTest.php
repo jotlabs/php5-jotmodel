@@ -44,4 +44,17 @@ class ContentRepositoryTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($content->pageUrl);
         $this->assertNotNull($content->permalink);
     }
+
+
+    public function testGetRecentContentReturnsItems()
+    {
+        $content = $this->repo->getRecentContent();
+
+        $this->assertNotNull($content);
+        $this->assertEquals(5, count($content));
+
+        foreach ($content as $item) {
+            $this->assertTrue(is_a($item, 'JotModel\Models\ContentEnvelope'));
+        }
+    }
 }

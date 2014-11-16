@@ -27,4 +27,21 @@ class ContentRepository
 
         return $results;
     }
+
+
+    public function getRecentContent($start = 0, $length = 5)
+    {
+        $builder = new QueryBuilder();
+        $builder
+            ->setModelClass('JotModel\Models\ContentEnvelope')
+            ->setQueryName('getRange')
+            ->setRange($start, $length)
+            ->filter('statusId', 1)
+            ->setSort('dateAdded', false);
+
+        $query    = $builder->build();
+        $content = $this->dataSource->find($query);
+
+        return $content;
+    }
 }
