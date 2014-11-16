@@ -57,4 +57,17 @@ class ContentRepositoryTest extends PHPUnit_Framework_TestCase
             $this->assertTrue(is_a($item, 'JotModel\Models\ContentEnvelope'));
         }
     }
+
+
+    public function testGetContentByCategoryReturnsItems()
+    {
+        $content = $this->repo->getContentByCategory('ashtanga');
+
+        $this->assertNotNull($content);
+        $this->assertEquals(5, count($content));
+
+        foreach ($content as $item) {
+            $this->assertTrue(is_a($item, 'JotModel\Models\ContentEnvelope'));
+        }
+    }
 }

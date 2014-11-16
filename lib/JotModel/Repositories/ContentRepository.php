@@ -44,4 +44,21 @@ class ContentRepository
 
         return $content;
     }
+
+
+    public function getContentByCategory($category, $start = 0, $length = 5)
+    {
+        $builder = new QueryBuilder();
+        $builder
+            ->setModelClass('JotModel\Models\ContentEnvelope')
+            ->setQueryName('getByCategory')
+            ->filter('category', $category)
+            ->setRange($start, $length)
+            ->setSort('dateAdded', false);
+
+        $query   = $builder->build();
+        $content = $this->dataSource->find($query);
+
+        return $content;
+    }
 }

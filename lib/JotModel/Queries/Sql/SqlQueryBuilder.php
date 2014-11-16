@@ -211,7 +211,10 @@ class SqlQueryBuilder
 
     protected function processSqlFilters($modelClass)
     {
-        if (is_subclass_of($modelClass, self::CONTENT_ENVELOPE_CLASS)) {
+        if (
+            $modelClass === self::CONTENT_ENVELOPE_CLASS
+            || is_subclass_of($modelClass, self::CONTENT_ENVELOPE_CLASS)
+        ) {
             // TODO: Replace this hacky with something schema based
             if (array_key_exists('tag', $this->filters)) {
                 $join = 'INNER JOIN `tagged_content` AS `tc` ON tc.envelopeId = ce.envelopeId';
