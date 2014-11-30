@@ -2,6 +2,7 @@
 namespace JotModel\Queries\Sql;
 
 use JotModel\Queries\Sql\Statements\InsertStatement;
+use JotModel\Queries\Sql\Statements\UpdateStatement;
 use JotModel\Queries\QueryBuilder;
 use JotModel\Repositories\ContentRepository;
 use JotModel\Models\ContentEnvelope;
@@ -20,7 +21,9 @@ abstract class SqlContentSaver
 
     private $typeModels  = array();
     private $contQueries = array(
+        // Content Envelope saver
         'saveEnvelope'   => 'INSERT INTO `content` VALUES(NULL, :statusId, :modelId, :contentId, :slug, :title, :excerpt, :extra1, :extra2, :pageUrl, :permalink, :image, :dateAdded, :dateUpdated, :guid, :version, :score);',
+        'updateEnvelope'   => 'UPDATE `content` SET slug = :slug, title = :title, excerpt = :excerpt, extra1 = :extra1, extra2 = :extra2, pageUrl = :pageUrl, imageTemplate = :image, dateUpdated = :dateUpdated, version = :version, score = :score WHERE envelopeId = :envelopeId;',
 
         // Category Saver
         'saveEnvelopeCategory' => 'INSERT INTO `content_categories` VALUES(:contentId, :categoryId, :isPrimary, :dateAdded);',
@@ -99,6 +102,36 @@ abstract class SqlContentSaver
             }
         }
 
+
+        return $response;
+    }
+
+
+    protected function updateEnvelope($oldArticle, $newArticle)
+    {
+        $stmName = 'updateEnvelope';
+        $update = new UpdateStatement();
+        $update->setQueryName($stmName);
+        $update->setStatement($this->contQueries[$stmName]);
+
+        $pageUrl = ($newArticle->permalink) ? $newArticle->permalink : $newArticle->slug;
+
+        $params = array(
+            ':envelopeId'  => $oldArticle->getEnvelopeId(),
+            ':slug'        => $newArticle->slug,
+            ':title'       => $newArticle->title,
+            ':excerpt'     => $newArticle->excerpt,
+            ':extra1'      => $newArticle->extra1,
+            ':extra2'      => $newArticle->extra2,
+            ':pageUrl'     => $pageUrl,
+            ':image'       => $newArticle->imageTemplate,
+            ':dateUpdated' => $newArticle->dateUpdated,
+            ':version'     => $oldArticle->version + 1,
+            ':score'       => ($newArticle->score) ? $newArticle->score : $oldArticle->score
+        );
+
+        //print_r($params);
+        $response = $this->dataSource->update($update, $params);
 
         return $response;
     }
