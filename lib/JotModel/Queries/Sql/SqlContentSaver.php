@@ -323,6 +323,14 @@ abstract class SqlContentSaver
     }
 
 
+    protected function hasUpdated($newContent, $oldContent)
+    {
+        $sourceTs = strtotime($newContent->dateUpdated);
+        $existTs = strtotime($oldContent->dateUpdated);
+        return ($sourceTs > $existTs);
+    }
+
+
     protected function getEnvelopeIdBySlug($slug)
     {
         $content    = $this->getContentBySlug($slug);
