@@ -89,6 +89,14 @@ class PdoDataSource implements DataSource
     }
 
 
+    public function update($update, $params)
+    {
+        $statement = $this->getStatement($update);
+        $response  = $this->execQuery($statement, $params);
+        return $response;
+    }
+
+
     protected function hydrateResults($results, $sqlQuery)
     {
         $hydratedResults = array();
