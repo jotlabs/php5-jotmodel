@@ -19,7 +19,7 @@ class DataSourceFactory
     }
 
 
-    public function getInstance()
+    public static function getInstance()
     {
         if (self::$INSTANCE == null) {
             self::$INSTANCE = new self();
