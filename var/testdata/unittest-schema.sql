@@ -153,7 +153,8 @@ CREATE TABLE IF NOT EXISTS `videos` (
 CREATE TABLE IF NOT EXISTS `tag_collections` (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
     slug            VARCHAR(31) UNIQUE,
-    name            VARCHAR(31)
+    name            VARCHAR(31),
+    description     TEXT
 );
 
 
@@ -162,6 +163,7 @@ CREATE TABLE IF NOT EXISTS `tags` (
     collectionId    INTEGER,
     slug            VARCHAR(31) UNIQUE,
     name            VARCHAR(31),
+    description     TEXT,
 
     FOREIGN KEY (`collectionId`) REFERENCES `tag_collections`(`id`)
 );
@@ -184,14 +186,16 @@ CREATE INDEX `content_tags_2` ON `content_tags` (`tagId`, `contentId`);
 --
 CREATE VIEW `tagged_content` AS
 SELECT
-    content_tags.contentId AS envelopeId,
-    content_tags.tagId     AS tagId,
-    tags.slug              AS tag,
-    tags.name              AS name,
-    tags.collectionId      AS collectionId,
-    tag_collections.slug   AS collectionSlug,
-    tag_collections.name   AS collectionName,
-    content_tags.dateAdded AS dateAdded
+    content_tags.contentId      AS envelopeId,
+    content_tags.tagId          AS tagId,
+    tags.slug                   AS tag,
+    tags.name                   AS name,
+    tags.description            AS description,
+    tags.collectionId           AS collectionId,
+    tag_collections.slug        AS collectionSlug,
+    tag_collections.name        AS collectionName,
+    tag_collections.description AS collectionDescription,
+    content_tags.dateAdded      AS dateAdded
 FROM `content_tags`
 LEFT JOIN `tags` ON `content_tags`.tagId = `tags`.id
 LEFT JOIN `tag_collections` ON `tags`.collectionId = `tag_collections`.id;
@@ -207,7 +211,8 @@ CREATE TABLE IF NOT EXISTS `category_collections` (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
     slug            VARCHAR(31) UNIQUE,
     name            VARCHAR(31),
-    weight          INTEGER
+    weight          INTEGER,
+    description     TEXT
 );
 
 
@@ -216,6 +221,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
     collectionId    INTEGER,
     slug            VARCHAR(31) UNIQUE,
     name            VARCHAR(31),
+    description     TEXT,
 
     FOREIGN KEY (`collectionId`) REFERENCES `category_collections`(`id`)
 );
@@ -240,16 +246,18 @@ CREATE INDEX `content_categories_2` ON `content_categories` (`categoryId`, `cont
 --
 CREATE VIEW `category_content` AS
 SELECT
-    content_categories.contentId    AS envelopeId,
-    content_categories.categoryId   AS categoryId,
-    content_categories.isPrimary    AS isPrimary,
-    categories.slug                 AS category,
-    categories.name                 AS name,
-    categories.collectionId         AS collectionId,
-    category_collections.slug       AS collectionSlug,
-    category_collections.name       AS collectionName,
-    category_collections.weight     AS collectionWeight,
-    content_categories.dateAdded    AS dateAdded
+    content_categories.contentId     AS envelopeId,
+    content_categories.categoryId    AS categoryId,
+    content_categories.isPrimary     AS isPrimary,
+    categories.slug                  AS category,
+    categories.name                  AS name,
+    categories.description           AS description,
+    categories.collectionId          AS collectionId,
+    category_collections.slug        AS collectionSlug,
+    category_collections.name        AS collectionName,
+    category_collections.description AS collectionDescription,
+    category_collections.weight      AS collectionWeight,
+    content_categories.dateAdded     AS dateAdded
 FROM `content_categories`
 LEFT JOIN `categories` ON `content_categories`.categoryId = `categories`.id
 LEFT JOIN `category_collections` ON `categories`.collectionId = `category_collections`.id;

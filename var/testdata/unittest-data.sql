@@ -49,14 +49,14 @@ INSERT INTO `videos` VALUES (16,'JpBDEJXq8EQ','https://www.youtube.com/watch?v=J
 --
 -- Content Tags
 --
-INSERT INTO `tag_collections` VALUES(1, 'uncategorised', 'Uncategorised');
-INSERT INTO `tag_collections` VALUES(2, 'styles',        'Styles');
-INSERT INTO `tag_collections` VALUES(3, 'poses',         'Poses');
-INSERT INTO `tag_collections` VALUES(4, 'teachers',      'Teachers');
+INSERT INTO `tag_collections` VALUES(1, 'uncategorised', 'Uncategorised', '');
+INSERT INTO `tag_collections` VALUES(2, 'styles',        'Styles', '');
+INSERT INTO `tag_collections` VALUES(3, 'poses',         'Poses', '');
+INSERT INTO `tag_collections` VALUES(4, 'teachers',      'Teachers', '');
 
-INSERT INTO `tags` VALUES(1, 2, 'ashtanga',            'Ashtanga');
-INSERT INTO `tags` VALUES(2, 4, 'kino-macgregor',      'Kino MacGregor');
-INSERT INTO `tags` VALUES(3, 4, 'sri-k-pattabhi-jois', 'Sri K. Pattabhi Jois');
+INSERT INTO `tags` VALUES(1, 2, 'ashtanga',            'Ashtanga', '');
+INSERT INTO `tags` VALUES(2, 4, 'kino-macgregor',      'Kino MacGregor', '');
+INSERT INTO `tags` VALUES(3, 4, 'sri-k-pattabhi-jois', 'Sri K. Pattabhi Jois', '');
 
 INSERT INTO `content_tags` VALUES(1, 1, '2014-06-01');
 INSERT INTO `content_tags` VALUES(1, 3, '2014-06-01');
@@ -85,9 +85,9 @@ INSERT INTO `content_tags` VALUES(16, 2, '2014-06-01');
 -- Content Categories
 --
 
-INSERT INTO `category_collections` VALUES(1, 'uncategorised', 'Uncategorised', 0);
+INSERT INTO `category_collections` VALUES(1, 'uncategorised', 'Uncategorised', 0, '');
 
-INSERT INTO `categories` VALUES(1, 1, 'ashtanga', 'Ashtanga');
+INSERT INTO `categories` VALUES(1, 1, 'ashtanga', 'Ashtanga', '');
 
 INSERT INTO `content_categories` VALUES(1, 1, 'N', '2014-06-01');
 INSERT INTO `content_categories` VALUES(2, 1, 'N', '2014-06-01');
