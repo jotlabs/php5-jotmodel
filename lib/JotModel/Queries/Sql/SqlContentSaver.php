@@ -27,11 +27,11 @@ abstract class SqlContentSaver
 
         // Category Saver
         'saveEnvelopeCategory' => 'INSERT INTO `content_categories` VALUES(:contentId, :categoryId, :isPrimary, :dateAdded);',
-        'saveCategory' => 'INSERT INTO `categories` VALUES(NULL, :collectionId, :slug, :name);',
+        'saveCategory' => 'INSERT INTO `categories` VALUES(NULL, :collectionId, :slug, :name, :description);',
 
         // Tag Saver
         'saveEnvelopeTag' => 'INSERT INTO `content_tags` VALUES(:contentId, :tagId, :dateAdded);',
-        'saveTag' => 'INSERT INTO `tags` VALUES(NULL, :collectionId, :slug, :name);'
+        'saveTag' => 'INSERT INTO `tags` VALUES(NULL, :collectionId, :slug, :name, :description);'
     );
 
 
@@ -192,7 +192,8 @@ abstract class SqlContentSaver
             $params = array(
                 ':slug'         => $category->slug,
                 ':name'         => $category->title,
-                ':collectionId' => 1
+                ':collectionId' => 1, # FIXME
+                ':description'  => empty($category->description) ? '' : $category->description
             );
 
             $response = $this->dataSource->insert($insert, $params);
@@ -234,7 +235,9 @@ abstract class SqlContentSaver
         foreach ($modelTags as $slug => $title) {
             $tag   = (object) array(
                 'slug'         => $slug,
-                'title'        => $title
+                'title'        => $title,
+                'collectionId' => 1, # FIXME
+                'description'  => '' # FIXME
             );
 
             $tagId = $this->saveTag($tag);
@@ -267,7 +270,8 @@ abstract class SqlContentSaver
             $params = array(
                 ':slug'         => $tag->slug,
                 ':name'         => $tag->title,
-                ':collectionId' => 1
+                ':collectionId' => $tag->collectionId,
+                ':description'  => $tag->description
             );
 
             $response = $this->dataSource->insert($insert, $params);

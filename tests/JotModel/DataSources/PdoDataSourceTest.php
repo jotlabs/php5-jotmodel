@@ -167,6 +167,7 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_a($category, 'JotModel\Models\Category'));
         $this->assertEquals('unit-test', $category->category);
         $this->assertEquals('N', $category->isPrimary);
+        $this->assertNotNull($category->description);
 
 
         $category = $newVideo->categories[1];
@@ -174,6 +175,7 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_a($category, 'JotModel\Models\Category'));
         $this->assertEquals('primary-cat', $category->category);
         $this->assertEquals('Y', $category->isPrimary);
+        $this->assertNotNull($category->description);
 
 
         // Check tags
@@ -185,6 +187,7 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($tag);
         $this->assertTrue(is_a($tag, 'JotModel\Models\Tag'));
         $this->assertEquals('fixture', $tag->tag);
+        $this->assertNotNull($tag->description);
     }
 
 
@@ -238,7 +241,8 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
         $video->categories    = array(
             'unit-test' => (object) array(
                 'slug'  => 'unit-test',
-                'title' => 'Unit Test'
+                'title' => 'Unit Test',
+                'description' => 'Unit test description'
             ),
             'primary-cat' => (object) array(
                 'slug'  => 'primary-cat',
