@@ -14,24 +14,28 @@ class Tag
     );
 
     public static $SQL_FIELDS = array(
-        'envelopeId'     => '',
-        'tagId'          => '',
-        'tag'            => '',
-        'name'           => '',
-        'collectionId'   => '',
-        'collectionSlug' => '',
-        'collectionName' => '',
-        'dateAdded'      => '',
+        'envelopeId'            => '',
+        'tagId'                 => '',
+        'tag'                   => '',
+        'name'                  => '',
+        'description'           => '',
+        'collectionId'          => '',
+        'collectionSlug'        => '',
+        'collectionName'        => '',
+        'collectionDescription' => '',
+        'dateAdded'             => '',
     );
 
     protected $envelopeId;
     protected $tagId;
     public $tag;
     public $name;
+    public $description;
 
     protected $collectionId;
     public $collectionSlug;
     public $collectionName;
+    public $collectionDescription;
 
     public $dateAdded;
 }
