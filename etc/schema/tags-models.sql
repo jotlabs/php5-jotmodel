@@ -6,7 +6,8 @@
 CREATE TABLE IF NOT EXISTS `tag_collections` (
     id              INTEGER PRIMARY KEY AUTO_INCREMENT,
     slug            VARCHAR(31) UNIQUE,
-    name            VARCHAR(31)
+    name            VARCHAR(31),
+    description     TEXT
 );
 
 
@@ -15,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `tags` (
     collectionId    INTEGER,
     slug            VARCHAR(31) UNIQUE,
     name            VARCHAR(31),
+    description     TEXT,
 
     FOREIGN KEY (`collectionId`) REFERENCES `tag_collections`(`id`)
 );
@@ -38,14 +40,16 @@ CREATE INDEX `content_tags_2` ON `content_tags` (`tagId`, `contentId`);
 --
 CREATE VIEW `tagged_content` AS
 SELECT
-    content_tags.contentId AS envelopeId,
-    content_tags.tagId     AS tagId,
-    tags.slug              AS tag,
-    tags.name              AS name,
-    tags.collectionId      AS collectionId,
-    tag_collections.slug   AS collectionSlug,
-    tag_collections.name   AS collectionName,
-    content_tags.dateAdded AS dateAdded
+    content_tags.contentId      AS envelopeId,
+    content_tags.tagId          AS tagId,
+    tags.slug                   AS tag,
+    tags.name                   AS name,
+    tags.description            AS description,
+    tags.collectionId           AS collectionId,
+    tag_collections.slug        AS collectionSlug,
+    tag_collections.name        AS collectionName,
+    tag_collections.description AS collectionDescription,
+    content_tags.dateAdded      AS dateAdded
 FROM `content_tags`
 LEFT JOIN `tags` ON `content_tags`.tagId = `tags`.id
 LEFT JOIN `tag_collections` ON `tags`.collectionId = `tag_collections`.id;
