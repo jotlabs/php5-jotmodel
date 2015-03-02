@@ -41,6 +41,21 @@ CREATE TABLE IF NOT EXISTS `content_types` (
 
 
 --
+-- Model: Content Authors
+--
+CREATE TABLE IF NOT EXISTS `content_authors` (
+    id              INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    name            VARCHAR(255),
+    slug            VARCHAR(255) UNIQUE,
+    shortBio        VARCHAR(255),
+    image           VARCHAR(255),
+    aboutSlug       VARCHAR(255),
+
+    bio             TEXT
+);
+
+--
 -- Content Envelope: generic data for custom content types
 --
 CREATE TABLE IF NOT EXISTS `content` (
@@ -49,6 +64,7 @@ CREATE TABLE IF NOT EXISTS `content` (
 
     typeId          INTEGER,
     contentId       INTEGER,
+    authorId        INTEGER,
 
     slug            VARCHAR(255),
     title           VARCHAR(255),
@@ -88,6 +104,7 @@ SELECT
     content.statusId      AS statusId,
     content_models.id     AS modelId,
     content.typeId        AS typeId,
+    content.authorId      AS authorId,
     content_status.slug   AS status,
     content_models.slug   AS model,
     content_types.slug    AS type,
@@ -103,11 +120,18 @@ SELECT
     content.dateUpdated   AS dateUpdated,
     content.guid          AS guid,
     content.version       AS version,
-    content.score         AS score
+    content.score         AS score,
+    content_authors.name      AS authorName,
+    content_authors.slug      AS authorSlug,
+    content_authors.image     AS authorImage,
+    content_authors.shortBio  AS authorShortBio,
+    content_authors.bio       AS authorBio,
+    content_authors.aboutSlug AS authorAboutSlug
 FROM `content`
-LEFT JOIN `content_status` ON content.statusId = content_status.id
-LEFT JOIN `content_types`  ON content.typeId = content_types.id
-LEFT JOIN `content_models` ON content_types.modelId  = content_models.id;
+LEFT JOIN `content_status`  ON content.statusId = content_status.id
+LEFT JOIN `content_types`   ON content.typeId = content_types.id
+LEFT JOIN `content_models`  ON content_types.modelId  = content_models.id
+LEFT JOIN `content_authors` ON content.authorId = content_authors.id;
 
 
 --
