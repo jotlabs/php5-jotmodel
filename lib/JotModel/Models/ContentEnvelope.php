@@ -49,7 +49,15 @@ class ContentEnvelope
         'dateUpdated'   => 'ce.dateUpdated',
         'guid'          => 'ce.guid',
         'version'       => 'ce.version',
-        'score'         => 'ce.score'
+        'score'         => 'ce.score',
+
+        'authorId'        => 'ce.authorId',
+        'authorName'      => 'ce.authorName',
+        'authorSlug'      => 'ce.authorSlug',
+        'authorImage'     => 'ce.authorImage',
+        'authorShortBio'  => 'ce.authorShortBio',
+        'authorBio'       => 'ce.authorBio',
+        'authorAboutSlug' => 'ce.authorAboutSlug'
     );
 
 
@@ -74,6 +82,14 @@ class ContentEnvelope
     public $guid;
     public $version;
     public $score;
+
+    public $authorId;
+    public $authorName;
+    public $authorSlug;
+    public $authorImage;
+    public $authorShortBio;
+    public $authorBio;
+    public $authorAboutSlug;
 
 
     public function getEnvelopeId()
