@@ -22,8 +22,11 @@ abstract class SqlContentSaver
     private $typeModels  = array();
     private $contQueries = array(
         // Content Envelope saver
-        'saveEnvelope'   => 'INSERT INTO `content` VALUES(NULL, :statusId, :modelId, :contentId, :slug, :title, :excerpt, :extra1, :extra2, :pageUrl, :permalink, :image, :dateAdded, :dateUpdated, :guid, :version, :score);',
+        'saveEnvelope'   => 'INSERT INTO `content` VALUES(NULL, :statusId, :modelId, :contentId, :authorId, :slug, :title, :excerpt, :extra1, :extra2, :pageUrl, :permalink, :image, :dateAdded, :dateUpdated, :guid, :version, :score);',
         'updateEnvelope'   => 'UPDATE `content` SET slug = :slug, title = :title, excerpt = :excerpt, extra1 = :extra1, extra2 = :extra2, pageUrl = :pageUrl, imageTemplate = :image, dateUpdated = :dateUpdated, version = :version, score = :score WHERE envelopeId = :envelopeId;',
+
+        // Author Saver
+        'saveAuthor' => 'INSERT INTO `content_authors`  VALUES(NULL, :name, :slug, :shortBio, :image, :aboutSlug, :bio);',
 
         // Category Saver
         'saveEnvelopeCategory' => 'INSERT INTO `content_categories` VALUES(:contentId, :categoryId, :isPrimary, :dateAdded);',
@@ -55,6 +58,7 @@ abstract class SqlContentSaver
         $modelName = $model::$MODEL_TYPE;
         $typeModel = $this->getTypeModel($modelName);
         $modelId   = ($typeModel) ? $typeModel->getId() : 0;
+        $authorId  = $this->saveAuthor($model);
 
         $now = date('c');
         $pageUrl = ($model->permalink) ? $model->permalink : $model->slug;
@@ -67,6 +71,7 @@ abstract class SqlContentSaver
             ':statusId'    => $statusId,
             ':modelId'     => $modelId,
             ':contentId'   => $contentId,
+            ':authorId'    => $authorId,
             ':slug'        => $model->slug,
             ':title'       => $model->title,
             ':excerpt'     => $model->excerpt,
@@ -146,6 +151,56 @@ abstract class SqlContentSaver
         }
 
         return $statusId;
+    }
+
+
+    protected function saveAuthor($model)
+    {
+        $authorId = 1;
+        $dbAuthor = $this->getAuthorBySlug($model->authorSlug);
+
+        if (!$dbAuthor) {
+            $stmName = 'saveAuthor';
+            $insert = new InsertStatement();
+            $insert->setQueryName($stmName);
+            $insert->setStatement($this->contQueries[$stmName]);
+
+            $params = array(
+                ':name'      => $model->authorName,
+                ':slug'      => $model->authorSlug,
+                ':shortBio'  => $model->authorShortBio,
+                ':image'     => $model->authorImage,
+                ':aboutSlug' => $model->authorAboutSlug,
+                ':bio'       => $model->authorBio
+            );
+
+            $response = $this->dataSource->insert($insert, $params);
+
+            if ($response) {
+                $dbAuthor = $this->getAuthorBySlug($model->authorSlug);
+            }
+        }
+
+        if ($dbAuthor) {
+            $authorId = $dbAuthor->getId();
+        }
+
+        return $authorId;
+    }
+
+
+    protected function getAuthorBySlug($authorSlug)
+    {
+        $builder = new QueryBuilder();
+        $builder
+            ->setModelClass('JotModel\Models\Author')
+            ->setQueryName('getBySlug')
+            ->filter('slug', $authorSlug);
+
+        $query  = $builder->build();
+        $author = $this->dataSource->findOne($query, false);
+
+        return $author;
     }
 
 

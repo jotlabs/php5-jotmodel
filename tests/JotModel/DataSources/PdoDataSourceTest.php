@@ -157,6 +157,12 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($newVideo->permalink);
         $this->assertEquals($newVideo->pageUrl, $newVideo->permalink);
 
+
+        // Check author
+        $this->assertEquals(3, $newVideo->authorId);
+        $this->assertEquals('new-author', $newVideo->authorSlug);
+        $this->assertEquals('/about/new-author', $newVideo->authorAboutSlug);
+
         // Check categories
         $this->assertNotNull($newVideo->categories);
         $this->assertTrue(is_array($newVideo->categories));
@@ -228,6 +234,11 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
         $video->guid = 'unit-test.guid';
         //$video->version;
         //$video->score;
+
+        // Author details
+        $video->authorName = 'New author';
+        $video->authorSlug = 'new-author';
+        $video->authorAboutSlug = '/about/new-author';
 
         // Video specific
         $video->sourceId      = 'unit-test.fixture';
