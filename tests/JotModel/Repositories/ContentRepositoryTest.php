@@ -43,6 +43,11 @@ class ContentRepositoryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $content->version);
         $this->assertNotNull($content->pageUrl);
         $this->assertNotNull($content->permalink);
+
+        // Test author fields are correct
+        $this->assertEquals(2, $content->authorId);
+        $this->assertEquals('ashtanga-yogi', $content->authorSlug);
+        $this->assertEquals('/about/ashtanga-yogi', $content->authorAboutSlug);
     }
 
 
