@@ -84,7 +84,9 @@ class PdoDataSource implements DataSource
     public function insert($insert, $params)
     {
         $statement = $this->getStatement($insert);
-        $response  = $this->execQuery($statement, $params);
+        if (!$this->isPdoError($statement)) {
+            $response = $this->execQuery($statement, $params);
+        }
         return $response;
     }
 
@@ -92,7 +94,9 @@ class PdoDataSource implements DataSource
     public function update($update, $params)
     {
         $statement = $this->getStatement($update);
-        $response  = $this->execQuery($statement, $params);
+        if (!$this->isPdoError($statement)) {
+            $response = $this->execQuery($statement, $params);
+        }
         return $response;
     }
 
