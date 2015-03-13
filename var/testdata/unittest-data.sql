@@ -92,7 +92,7 @@ INSERT INTO `content_tags` VALUES(16, 2, '2014-06-01');
 
 INSERT INTO `category_collections` VALUES(1, 'uncategorised', 'Uncategorised', 0, '');
 
-INSERT INTO `categories` VALUES(1, 1, 'ashtanga', 'Ashtanga', '');
+INSERT INTO `categories` VALUES(1, 1, 'ashtanga', 'Ashtanga', '', 0);
 
 INSERT INTO `content_categories` VALUES(1, 1, 'N', '2014-06-01');
 INSERT INTO `content_categories` VALUES(2, 1, 'N', '2014-06-01');

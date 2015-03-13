@@ -247,6 +247,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
     slug            VARCHAR(31) UNIQUE,
     name            VARCHAR(31),
     description     TEXT,
+    totalArticles   INTEGER,
 
     FOREIGN KEY (`collectionId`) REFERENCES `category_collections`(`id`)
 );
@@ -277,6 +278,7 @@ SELECT
     categories.slug                  AS category,
     categories.name                  AS name,
     categories.description           AS description,
+    categories.totalArticles         AS totalArticles,
     categories.collectionId          AS collectionId,
     category_collections.slug        AS collectionSlug,
     category_collections.name        AS collectionName,
