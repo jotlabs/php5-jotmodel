@@ -20,6 +20,7 @@ class Category
         'category'              => '',
         'name'                  => '',
         'description'           => '',
+        'totalArticles'         => '',
         'collectionId'          => '',
         'collectionSlug'        => '',
         'collectionName'        => '',
@@ -33,6 +34,7 @@ class Category
     public $category;
     public $name;
     public $description;
+    public $totalArticles;
     public $isPrimary;
 
     protected $collectionId;
