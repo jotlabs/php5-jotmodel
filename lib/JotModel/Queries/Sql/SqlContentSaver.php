@@ -30,7 +30,7 @@ abstract class SqlContentSaver
 
         // Category Saver
         'saveEnvelopeCategory' => 'INSERT INTO `content_categories` VALUES(:contentId, :categoryId, :isPrimary, :dateAdded);',
-        'saveCategory' => 'INSERT INTO `categories` VALUES(NULL, :collectionId, :slug, :name, :description);',
+        'saveCategory' => 'INSERT INTO `categories` VALUES(NULL, :collectionId, :slug, :name, :description, :totalArticles);',
 
         // Tag Saver
         'saveEnvelopeTag' => 'INSERT INTO `content_tags` VALUES(:contentId, :tagId, :dateAdded);',
@@ -245,10 +245,11 @@ abstract class SqlContentSaver
             $insert->setStatement($this->contQueries[$stmName]);
 
             $params = array(
-                ':slug'         => $category->slug,
-                ':name'         => $category->title,
-                ':collectionId' => 1, # FIXME
-                ':description'  => empty($category->description) ? '' : $category->description
+                ':slug'          => $category->slug,
+                ':name'          => $category->title,
+                ':collectionId'  => 1, # FIXME
+                ':description'   => empty($category->description) ? '' : $category->description,
+                ':totalArticles' => 0
             );
 
             $response = $this->dataSource->insert($insert, $params);
