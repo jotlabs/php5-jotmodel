@@ -176,8 +176,8 @@ class PdoDataSourceTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($category->description);
         $this->assertEquals('Unit test description', $category->description);
 
-        $this->assertNotNull($category->numberArticles);
-        $this->assertEquals(0, $category->numberArticles);
+        $this->assertNotNull($category->totalArticles);
+        $this->assertEquals(0, $category->totalArticles);
 
 
         $category = $newVideo->categories[1];
