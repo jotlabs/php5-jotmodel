@@ -26,6 +26,19 @@ class ContentRepositoryTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function testGetCategoryReturnsCategory()
+    {
+        $slug = 'ashtanga';
+        $category = $this->repo->getCategory($slug);
+
+        $this->assertNotNull($category);
+        $this->assertTrue(is_a($category, 'JotModel\Models\Category'));
+
+        $this->assertEquals($slug, $category->slug);
+        $this->assertEquals('Ashtanga', $category->name);
+    }
+
+
     public function testGetBySlugReturnsContentModel()
     {
         $slug = 'the-ashtanga-primary-series';

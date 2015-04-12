@@ -14,6 +14,21 @@ class ContentRepository
     }
 
 
+    public function getCategory($categorySlug)
+    {
+        $builder = new QueryBuilder();
+        $builder
+            ->setModelClass('JotModel\Models\Category')
+            ->setQueryName('categoryBySlug')
+            ->filter('slug', $categorySlug);
+
+        $query = $builder->build();
+        $categories = $this->dataSource->find($query);
+
+        return (!empty($categories)) ? $categories[0] : null;
+    }
+
+
     public function getBySlug($slug)
     {
         $builder = new QueryBuilder();
