@@ -23,7 +23,7 @@ abstract class SqlContentSaver
     private $contQueries = array(
         // Content Envelope saver
         'saveEnvelope'   => 'INSERT INTO `content` VALUES(NULL, :statusId, :modelId, :contentId, :authorId, :slug, :title, :excerpt, :extra1, :extra2, :pageUrl, :permalink, :image, :dateAdded, :dateUpdated, :guid, :version, :score);',
-        'updateEnvelope'   => 'UPDATE `content` SET slug = :slug, title = :title, excerpt = :excerpt, extra1 = :extra1, extra2 = :extra2, pageUrl = :pageUrl, imageTemplate = :image, dateUpdated = :dateUpdated, version = :version, score = :score WHERE envelopeId = :envelopeId;',
+        'updateEnvelope'   => 'UPDATE `content` SET slug = :slug, title = :title, excerpt = :excerpt, extra1 = :extra1, extra2 = :extra2, pageUrl = :pageUrl, imageTemplate = :image, dateAdded = :dateAdded, dateUpdated = :dateUpdated, version = :version, score = :score WHERE envelopeId = :envelopeId;',
 
         // Author Saver
         'saveAuthor' => 'INSERT INTO `content_authors`  VALUES(NULL, :name, :slug, :shortBio, :image, :aboutSlug, :bio);',
@@ -130,6 +130,7 @@ abstract class SqlContentSaver
             ':extra2'      => $newArticle->extra2,
             ':pageUrl'     => $pageUrl,
             ':image'       => $newArticle->imageTemplate,
+            ':dateAdded'   => $newArticle->dateAdded,
             ':dateUpdated' => $newArticle->dateUpdated,
             ':version'     => $oldArticle->version + 1,
             ':score'       => ($newArticle->score) ? $newArticle->score : $oldArticle->score
